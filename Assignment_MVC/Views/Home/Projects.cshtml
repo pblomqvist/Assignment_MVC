@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewData["Title"] = "Projects";
+}
+
+<h1>Projects</h1>
+@foreach (var project in Model)
+{
+    <h3>@project.Name</h3>
+    <a href="@project.Url">LINK TO PROJECT</a>
+    <p>@project.Description</p>
+
+}

@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <header>
+        <h1 id="logo">my page.</h1>
+        <ul id="nav">
+            <li><a asp-controller="Home" asp-action="Index">Index</a></li>
+            <li><a asp-controller="Home" asp-action="About">About</a></li>
+            <li><a asp-controller="Home" asp-action="Projects">Projects</a></li>
+            <li><a asp-controller="Home" asp-action="Contact">Contact</a></li>
+        </ul>
+    </header>
+    <div>
+        @RenderBody()
+    </div>
+    <footer>&copy; Pernilla Blomqvist - @DateTime.Now</footer>
+</body>
+</html>
