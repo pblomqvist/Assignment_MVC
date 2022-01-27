@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = "Fever Check";
+}
+
+<h1>Fever Check</h1>
+
+@if (ViewBag.Message != null)
+{
+    <p>@ViewBag.Message</p>
+}
+
+<form asp-controller="Doctor" asp-action="FeverCheck" method="post">
+    <label>Temperature:</label>
+    <input type="number" name="temperature" />
+    <input type="submit" value="Check" />
+</form>
