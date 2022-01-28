@@ -18,6 +18,7 @@ namespace Assignment_MVC
         {
             services.AddMvc();
             services.AddHttpContextAccessor();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -30,17 +31,22 @@ namespace Assignment_MVC
 
             app.UseStaticFiles();
             app.UseRouting();
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}"
-                    );
-                endpoints.MapControllerRoute(
                     name: "FeverCheck",
                     pattern: "{action}",
                     defaults: new { controller = "Doctor", action = "FeverCheck" });
+                endpoints.MapControllerRoute(
+                    name: "GuessingGame",
+                    pattern: "{action}",
+                    defaults: new { controller = "Game", action = "GuessingGame" });
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}"
+                    );
             });
         }
     }

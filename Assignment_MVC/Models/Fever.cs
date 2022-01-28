@@ -8,6 +8,7 @@ namespace Assignment_MVC.Models
 {
     public class Fever
     {
+        
         public static string Check(int temperature)
         {
             if (temperature >= 38)

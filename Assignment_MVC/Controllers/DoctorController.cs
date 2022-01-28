@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace Assignment_MVC.Controllers
 {
+    
     public class DoctorController : Controller
     {
+        
         public IActionResult FeverCheck()
         {
             return View();
