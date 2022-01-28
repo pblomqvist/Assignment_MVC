@@ -10,19 +10,19 @@ namespace Assignment_MVC.Models
 {
     public class Guess
     {
-        public static string Check(int input, int randnum)
+        public static string Check(int guessednum, int randnum)
         {
-            if (input == randnum)
+            if (guessednum == randnum)
             {
                 return "Congratulations, your guess of " + randnum + " was correct! New number generated, try again!!";
-            } else if (input < randnum) {
-                return "Number is higher than " + input;
-            } else if (input > randnum)
+            } else if (guessednum < randnum) {
+                return "Number is higher than " + guessednum;
+            } else if (guessednum > randnum)
             {
-                return "Number is lower than " + input;
+                return "Number is lower than " + guessednum;
             } else
             {
-                return "Guessed number is " + input;
+                return "Guessed number is " + guessednum;
             }
         }
 

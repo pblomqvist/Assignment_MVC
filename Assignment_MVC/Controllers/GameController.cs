@@ -21,15 +21,15 @@ namespace Assignment_MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult GuessingGame(int input, int randnum)
+        public IActionResult GuessingGame(int guessednum, int randnum)
         {
-            Guess.GuessedNumber = input;
+            Guess.GuessedNumber = guessednum;
             randnum = (int)HttpContext.Session.GetInt32("RandomNum");
 
             if (ModelState.IsValid)
             {
-                ViewBag.Message = Guess.Check(input, randnum);
-                if (input == randnum)
+                ViewBag.Message = Guess.Check(guessednum, randnum);
+                if (guessednum == randnum)
                 {
                     Guess.RandomNumber = Guess.GetNewNum();
                     HttpContext.Session.SetInt32("RandomNum", Guess.RandomNumber);
