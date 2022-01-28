@@ -33,15 +33,14 @@ namespace Assignment_MVC
 
             app.UseEndpoints(endpoints =>
             {
-                
+                endpoints.MapControllerRoute(
+                    name: "FeverCheck",
+                    pattern: "{action}",
+                    defaults: new { controller = "Doctor" });
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}"
                     );
-                endpoints.MapControllerRoute(
-                    name: "FeverCheck",
-                    pattern: "{action}",
-                    defaults: new { controller = "Doctor", action = "FeverCheck" });
             });
         }
     }
