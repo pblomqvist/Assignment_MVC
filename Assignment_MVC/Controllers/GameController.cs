@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 
 namespace Assignment_MVC.Controllers
 {
+    [Route("/GuessingGame")]
     public class GameController : Controller
     {
+        [HttpGet]
         public IActionResult GuessingGame()
         {
 
