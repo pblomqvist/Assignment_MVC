@@ -12,6 +12,7 @@ namespace Assignment_MVC.Models
     {
         public static string Check(int guessednum, int randnum)
         {
+           
             if (guessednum == randnum)
             {
                 return "Congratulations, your guess of " + randnum + " was correct! New number generated, try again!!";
@@ -30,8 +31,9 @@ namespace Assignment_MVC.Models
         {
             Random rnd = new Random();
             int value = rnd.Next(1, 100);
+            RandomNumber = value;
 
-            return value;
+            return RandomNumber;
         }
 
         [Required]

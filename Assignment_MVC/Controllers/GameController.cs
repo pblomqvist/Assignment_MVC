@@ -8,33 +8,47 @@ using System.Threading.Tasks;
 
 namespace Assignment_MVC.Controllers
 {
-    [Route("/GuessingGame")]
     public class GameController : Controller
     {
         [HttpGet]
         public IActionResult GuessingGame()
         {
+            //Randomize a number and assign it
+            //Guess.RandomNumber = Guess.GetNewNum();
 
-            Guess.RandomNumber = Guess.GetNewNum();
+            if (!HttpContext.Request.Cookies.ContainsKey("RandomNum"))
+            {
+                AppendNewNum();
+                HttpContext.Session.SetInt32("RandomNum", Guess.RandomNumber);
+            } else
+            {
+                ViewBag.Message = "Random number exists!";
+            }
 
-            HttpContext.Session.SetInt32("RandomNum", Guess.RandomNumber);
            
             return View();
+        }
+        
+        public void AppendNewNum()
+        {
+            Guess.RandomNumber = Guess.GetNewNum();
+            HttpContext.Response.Cookies.Append("RandomNum", Guess.RandomNumber.ToString());
+            HttpContext.Session.SetInt32("RandomNum", Guess.RandomNumber);
         }
 
         [HttpPost]
         public IActionResult GuessingGame(int guessednum, int randnum)
         {
             Guess.GuessedNumber = guessednum;
-            randnum = (int)HttpContext.Session.GetInt32("RandomNum");
+            randnum = Int32.Parse(HttpContext.Request.Cookies["RandomNum"]);
 
             if (ModelState.IsValid)
             {
                 ViewBag.Message = Guess.Check(guessednum, randnum);
                 if (guessednum == randnum)
                 {
-                    Guess.RandomNumber = Guess.GetNewNum();
-                    HttpContext.Session.SetInt32("RandomNum", Guess.RandomNumber);
+                    Response.Cookies.Delete("RandomNum");
+                    AppendNewNum();
                 }
             } else
             {
