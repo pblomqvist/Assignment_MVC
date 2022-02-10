@@ -4,22 +4,34 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
+    <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <script src="~/lib/jquery/jquery.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.js"></script>
 </head>
 <body>
-    <header>
-        <h1 id="logo">my page.</h1>
-        <ul id="nav">
-            <li><a asp-controller="Home" asp-action="Index">Index</a></li>
-            <li><a asp-controller="Home" asp-action="About">About</a></li>
-            <li><a asp-controller="Home" asp-action="Projects">Projects</a></li>
-            <li><a asp-controller="Home" asp-action="Contact">Contact</a></li>
-            <li><a asp-controller="Doctor" asp-action="FeverCheck">Fever Check</a></li>
-            <li><a asp-controller="Game" asp-action="GuessingGame">Guessing Game</a></li>
-        </ul>
-    </header>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+        <div class="container-fluid">
+            <h1 id="logo" class="navbar-brand">my page.</h1>
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Index</a></li>
+                <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="About">About</a></li>
+                <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Projects">Projects</a></li>
+                <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                <li class="nav-item"><a class="nav-link" asp-controller="Doctor" asp-action="FeverCheck">Fever Check</a></li>
+                <li class="nav-item"><a class="nav-link" asp-controller="Game" asp-action="GuessingGame">Guessing Game</a></li>
+                <li class="nav-item"><a class="nav-link" asp-controller="Person" asp-action="PersonData">Person Data</a></li>
+                <li class="nav-item"><a class="nav-link" asp-controller="Test" asp-action="Index">Test Arena</a></li>
+            </ul>
+        </div>
+
+    </nav>
     <div>
         @RenderBody()
     </div>
-    <footer>&copy; Pernilla Blomqvist - @DateTime.Now</footer>
+    <footer class="mt-5 p-4 bg-dark text-white text-center">&copy; Pernilla Blomqvist - @DateTime.Now</footer>
+    <script src="~/lib/jquery/jquery.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.js"></script>
+    <script src="~/lib/bootstrap/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

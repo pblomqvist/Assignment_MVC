@@ -1,0 +1,29 @@
+﻿@model Person  
+
+<div class="mt-3 shadow-sm d-inline-flex justify-content-center">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">@Model.Name</h4>
+            <div class="row">
+                <div class="col">ID</div>
+                <div class="col">@Model.PersonId</div>
+            </div>
+            <div class="row">
+                <div class="col">Name</div>
+                <div class="col">@Model.Name</div>
+            </div>
+            <div class="row">
+                <div class="col">Phone</div>
+                <div class="col">@Model.PhoneNumber</div>
+            </div>
+            <div class="row">
+                <div class="col">City</div>
+                <div class="col">@Model.City</div>
+            </div>
+            <a asp-action="Edit" asp-route-id="@Model.PersonId" class="btn btn-info">Edit</a>
+            <a asp-action="Delete" asp-route-id="@Model.PersonId" data-id="@Model.PersonId" class="btn btn-info">Delete</a>
+
+        </div>
+    </div>
+    
+</div>

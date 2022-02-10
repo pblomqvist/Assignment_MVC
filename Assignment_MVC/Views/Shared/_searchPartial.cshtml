@@ -1,0 +1,10 @@
+﻿@model PersonViewModel
+
+<form asp-action="Search" method="post">
+    <div asp-validation-summary="ModelOnly"></div>
+    <div>
+        <label asp-for="@Model.keyword">Search</label>
+        <input asp-for="@Model.keyword" />
+        <input type="submit" value="Search" />
+    </div>
+</form>
