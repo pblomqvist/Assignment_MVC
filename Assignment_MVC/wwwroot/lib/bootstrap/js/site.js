@@ -31,9 +31,11 @@ function createNew(e) {
             function (response) {
                 console.log('Error: ' + response);
                 $("#testDiv").attr('class', 'alert alert-danger');
-                $("#testDiv").html("<strong>Something went wrong.</strong> Try again.");
+                $("#testDiv").html("<strong>Error!</strong> Could not add person to list.");
+
             }
     });
+
 
 }
 

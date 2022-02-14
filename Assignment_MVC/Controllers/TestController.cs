@@ -126,7 +126,7 @@ namespace Assignment_MVC.Controllers
         }
 
 
-        public ActionResult Create(string Name, int PhoneNumber, string City)
+        public ActionResult Create(string Name, int PhoneNumber, string City, PersonCreateViewModel personCrVM)
         {
             int idCounter = 0 + AllPeople.Count();
 
@@ -134,20 +134,32 @@ namespace Assignment_MVC.Controllers
 
             if (Name != null || PhoneNumber != 0 || City != null)
             {
+                personCrVM.Name = Name;
+                personCrVM.PhoneNumber = PhoneNumber;
+                personCrVM.City = City;
+
+            }
+
+            if (ModelState.IsValid)
+            {
+
                 person.PersonId = ++idCounter;
-                person.Name = Name;
-                person.PhoneNumber = PhoneNumber;
-                person.City = City;
+                person.Name = personCrVM.Name;
+                person.PhoneNumber = personCrVM.PhoneNumber;
+                person.City = personCrVM.City;
 
                 AllPeople.Add(person);
 
-            } else
-            {
-                return null;
+                if (person != null)
+                {
+                    return PartialView("_cardPartial", person);
+                }
+
+                ModelState.AddModelError("Storage", "Failed to save");
+
             }
 
-
-            return PartialView("_cardPartial", person);
+            return View(personCrVM);
         }
 
 

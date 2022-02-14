@@ -1,4 +1,4 @@
-﻿@model PersonViewModel
+﻿@model PersonCreateViewModel
 
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create">Add person</button>
 
@@ -12,19 +12,21 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="modal-body">
                 <div>
-                    <label asp-for="@Model.CreateVM.Name"></label>
-                    <input id="crName" class="form-control" asp-for="@Model.CreateVM.Name" />
-                    <span asp-validation-for="@Model.CreateVM.Name"></span>
+                    <label asp-for="@Model.Name"></label>
+                    <input id="crName" class="form-control" asp-for="@Model.Name" />
+                    <span class="field-validation-error text-danger" 
+            data-valmsg-for="StudentName" 
+            data-valmsg-replace="true" asp-validation-for="@Model.Name"></span>
                 </div>
                 <div>
-                    <label asp-for="@Model.CreateVM.PhoneNumber"></label>
-                    <input id="crPhone" class="form-control" asp-for="@Model.CreateVM.PhoneNumber" />
-                    <span asp-validation-for="@Model.CreateVM.PhoneNumber"></span>
+                    <label asp-for="@Model.PhoneNumber"></label>
+                    <input id="crPhone" class="form-control" asp-for="@Model.PhoneNumber" />
+                    <span asp-validation-for="@Model.PhoneNumber"></span>
                 </div>
                 <div>
-                    <label asp-for="@Model.CreateVM.City"></label>
-                    <input id="crCity" class="form-control" asp-for="@Model.CreateVM.City" />
-                    <span asp-validation-for="@Model.CreateVM.City"></span>
+                    <label asp-for="@Model.City"></label>
+                    <input id="crCity" class="form-control" asp-for="@Model.City" />
+                    <span asp-validation-for="@Model.City"></span>
                 </div>
                 <div class="modal-footer">
                     <button type="button" onclick="createNew()" class="btn btn-primary" data-bs-dismiss="modal">Create</button>
