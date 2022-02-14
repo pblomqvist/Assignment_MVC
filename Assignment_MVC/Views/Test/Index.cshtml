@@ -1,34 +1,44 @@
 ﻿@model PersonViewModel
 
 @{
-    ViewData["Title"] = "Test Arena";
+    ViewData["Title"] = "Catalogue";
 }
 
 <div class="d-flex justify-content-center">
-    <h1>Test Arena</h1>
+    <h1>Catalogue</h1>
 </div>
 
-<div class="container d-flex justify-content-center">
+<div class="container d-flex justify-content-between">
+
+    @*<div class="flex-row-reverse">
+            <partial name="_searchPartial" model="@Model.CreateVM" />
+        </div>*@
 
     <div class="flex-row">
+        <input id="newSearch" class="" placeholder="Type ID..." type="text" />
+        <input class="btn btn-primary" id="searchBtn" onclick="search()" type="submit" value="Search" />
+        <input class="btn btn-primary" id="deletBtn" onclick="del()" type="submit" value="Delete" />
+    </div>
+    
+    <div class="flex-row">
+
+       <button class="btn btn-primary" onclick="fetchData()" id="fetchData">Refresh list</button>
+
         <partial name="_createPartial" model="@Model.CreateVM" />
     </div>
-    
-    <div class="flex-row-reverse">
-        <partial name="_searchPartial" model="@Model.CreateVM" />
-    </div>
-    
 
 </div>
+<hr />
 
-<button id="jsonBtn">Test</button>
+
+<div id="testDiv" class="d-flex justify-content-center">
+
+</div>
 
 <div id="personList" class="container d-flex justify-content-center">
-    @foreach (Person item in Model.listOfPeople)
-    {
-        <partial name="_listPartial" model="item" />
-    }
+    <partial name="_cardListPartial" model="@Model.listOfPeople" />
 
 </div>
-        
+
+
 

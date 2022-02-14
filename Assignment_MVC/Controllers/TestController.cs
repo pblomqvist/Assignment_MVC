@@ -1,7 +1,9 @@
 ﻿using Assignment_MVC.Models;
 using Assignment_MVC.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Nancy.Json;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,6 +55,7 @@ namespace Assignment_MVC.Controllers
             }
         };
 
+
         public IActionResult Index()
         {
             personVM.listOfPeople = AllPeople.OrderBy(p => p.PersonId).ToList();
@@ -61,98 +64,157 @@ namespace Assignment_MVC.Controllers
 
         }
 
-
-        public ActionResult Search(string keyword)
+        [HttpGet]
+        public ActionResult Fetch()
         {
-            PersonViewModel search = new PersonViewModel();
-            Person person = new Person();
-            List<Person> matches = new List<Person>();
+            personVM.listOfPeople = AllPeople.OrderBy(p => p.PersonId).ToList();
 
-            if (keyword != null)
-            {
-                search.keyword = keyword.ToLower();
-
-                foreach (Person item in AllPeople)
-                {
-
-                    if (item.Name.ToLower().Contains(keyword) || item.City.ToLower().Contains(keyword))
-                    {
-                        person = item;
-                        matches.Add(person);
-                    }
-                }
-
-                search.listOfPeople = matches;
-
-            } else
-            {
-                search.listOfPeople = AllPeople;
-            } 
-
-            return View("Index", search);
+            return PartialView("_cardListPartial", personVM.listOfPeople);
         }
 
-        [HttpPost]
-        public ActionResult Create(PersonViewModel create)
+    //public ActionResult Search(string keyword)
+    //    {
+    //        PersonViewModel search = new PersonViewModel();
+    //        Person person = new Person();
+    //        List<Person> matches = new List<Person>();
+
+    //        if (keyword != null)
+    //        {
+    //            search.keyword = keyword.ToLower();
+
+    //            foreach (Person item in AllPeople)
+    //            {
+
+    //                if (item.Name.ToLower().Contains(keyword) || item.City.ToLower().Contains(keyword))
+    //                {
+    //                    person = item;
+    //                    matches.Add(person);
+    //                }
+    //            }
+
+    //            search.listOfPeople = matches;
+
+    //        } else
+    //        {
+    //            search.listOfPeople = AllPeople;
+    //        } 
+
+    //        return View("Index", search);
+    //    }
+
+     
+        public ActionResult Details(int id)
+        {
+
+            List<Person> people = AllPeople;
+            Person targetPerson = new Person();
+
+            foreach (Person item in people)
+            {
+                if (item.PersonId == id)
+                {
+                    targetPerson = item;
+                }
+            }
+
+            if (id == 0 || targetPerson.Name == null)
+            {
+                return null;
+            }
+
+            return PartialView("_cardPartial", targetPerson);
+        }
+
+
+        public ActionResult Create(string Name, int PhoneNumber, string City)
         {
             int idCounter = 0 + AllPeople.Count();
 
-            if (ModelState.IsValid)
+            Person person = new Person();
+
+            if (Name != null || PhoneNumber != 0 || City != null)
             {
-                Person newPerson = new Person();
-                newPerson.PersonId = ++idCounter;
-                newPerson.Name = create.CreateVM.Name;
-                newPerson.PhoneNumber = create.CreateVM.PhoneNumber;
-                newPerson.City = create.CreateVM.City;
+                person.PersonId = ++idCounter;
+                person.Name = Name;
+                person.PhoneNumber = PhoneNumber;
+                person.City = City;
 
-                AllPeople.Add(newPerson);
+                AllPeople.Add(person);
 
-                if (newPerson != null)
-                {
-                    return RedirectToAction(nameof(Index), "Test");
-                }
-
-                ModelState.AddModelError("Storage", "Failed to save");
-
+            } else
+            {
+                return null;
             }
+
+
+            return PartialView("_cardPartial", person);
+        }
+
+
+        //public ActionResult Create(PersonViewModel create)
+        //{
+        //    int idCounter = 0 + AllPeople.Count();
+        //    Person newPerson = new Person();
+
+        //    if (ModelState.IsValid)
+        //    {
+                
+        //        newPerson.PersonId = ++idCounter;
+        //        newPerson.Name = create.CreateVM.Name;
+        //        newPerson.PhoneNumber = create.CreateVM.PhoneNumber;
+        //        newPerson.City = create.CreateVM.City;
+
+        //        AllPeople.Add(newPerson);
+
+        //        if (newPerson != null)
+        //        {
+        //            return RedirectToAction(nameof(Index), "Test");
+        //        }
+
+        //        ModelState.AddModelError("Storage", "Failed to save");
+
+        //    }
+
+        //    create.listOfPeople = AllPeople;
             
-            return View("Index", create);
-        }
+        //    return PartialView("_listPartial", newPerson);
+        //}
 
-        public ActionResult Edit(int id)
-        {
-            var person = AllPeople.Where(p => p.PersonId == id).FirstOrDefault();
+        //public ActionResult Edit(int id)
+        //{
+        //    var person = AllPeople.Where(p => p.PersonId == id).FirstOrDefault();
 
-            return View(person);
-        }
+        //    return View(person);
+        //}
+
+        //[HttpPost]
+        //public ActionResult Edit(Person prsn)
+        //{
+        //   var person = AllPeople.Where(p => p.PersonId == prsn.PersonId).FirstOrDefault();
+
+        //    AllPeople.Remove(person);
+        //    AllPeople.Add(prsn);
+
+        //    return RedirectToAction("Index");
+        //}
 
         [HttpPost]
-        public ActionResult Edit(Person prsn)
-        {
-           var person = AllPeople.Where(p => p.PersonId == prsn.PersonId).FirstOrDefault();
-
-            AllPeople.Remove(person);
-            AllPeople.Add(prsn);
-
-            return RedirectToAction("Index");
-        }
-
-        public ActionResult Delete(int id)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult Delete(int id)
         {
             PersonViewModel del = new PersonViewModel();
-
             del.listOfPeople = AllPeople;
-
             Person person = del.listOfPeople.Find(p => p.PersonId == id);
-            AllPeople.Remove(person);
-            return View("Index", del);
+
+            if (person != null)
+            {
+                del.listOfPeople.Remove(person);
+                return Ok();
+            }
+
+            return NotFound();
         }
 
-        public ActionResult Example(string model)
-        {
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
-            var fromJSON = serializer.Deserialize<Person>(model);
-            return Json(fromJSON);
-        }
     }
 }

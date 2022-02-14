@@ -1,28 +1,38 @@
 ﻿@model PersonViewModel
 
-<button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#create">Add person</button>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create">Add person</button>
 
-<div id="create" class="collapse">
-    <form asp-action="Create" method="post">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div>
-            <label asp-for="@Model.CreateVM.Name"></label>
-            <input asp-for="@Model.CreateVM.Name" />
-            <span asp-validation-for="@Model.CreateVM.Name"></span>
+<div id="create" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Create person</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="modal-body">
+                <div>
+                    <label asp-for="@Model.CreateVM.Name"></label>
+                    <input id="crName" class="form-control" asp-for="@Model.CreateVM.Name" />
+                    <span asp-validation-for="@Model.CreateVM.Name"></span>
+                </div>
+                <div>
+                    <label asp-for="@Model.CreateVM.PhoneNumber"></label>
+                    <input id="crPhone" class="form-control" asp-for="@Model.CreateVM.PhoneNumber" />
+                    <span asp-validation-for="@Model.CreateVM.PhoneNumber"></span>
+                </div>
+                <div>
+                    <label asp-for="@Model.CreateVM.City"></label>
+                    <input id="crCity" class="form-control" asp-for="@Model.CreateVM.City" />
+                    <span asp-validation-for="@Model.CreateVM.City"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="createNew()" class="btn btn-primary" data-bs-dismiss="modal">Create</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
         </div>
-        <div>
-            <label asp-for="@Model.CreateVM.PhoneNumber"></label>
-            <input asp-for="@Model.CreateVM.PhoneNumber" />
-            <span asp-validation-for="@Model.CreateVM.PhoneNumber"></span>
-        </div>
-        <div>
-            <label asp-for="@Model.CreateVM.City"></label>
-            <input asp-for="@Model.CreateVM.City" />
-            <span asp-validation-for="@Model.CreateVM.City"></span>
-        </div>
-        <div>
-            <input type="submit" value="Create" />
-        </div>
-    </form>
-
+    </div>
+    
+    
 </div>
