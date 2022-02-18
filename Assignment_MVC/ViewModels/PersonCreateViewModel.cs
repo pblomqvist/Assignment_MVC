@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assignment_MVC.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -16,10 +17,12 @@ namespace Assignment_MVC.ViewModels
         [Required]
         public int PhoneNumber { get; set; }
 
-        [Required]
         [RegularExpression("^[a-zA-Z ]*$", ErrorMessage = "City cannot contain numbers")]
         [StringLength(80, MinimumLength = 1)]
         public string City { get; set; }
+
+        public string CityName { get; set; }
+        public City newCity { get; set; }
 
         public PersonCreateViewModel() { }
 

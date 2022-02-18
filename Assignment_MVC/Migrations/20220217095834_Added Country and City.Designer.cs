@@ -3,14 +3,16 @@ using Assignment_MVC.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Assignment_MVC.Migrations
 {
     [DbContext(typeof(PersonDbContext))]
-    partial class PersonDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220217095834_Added Country and City")]
+    partial class AddedCountryandCity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,37 +26,22 @@ namespace Assignment_MVC.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CountryName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CountryName1")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("CityName");
 
-                    b.HasIndex("CountryName1");
+                    b.HasIndex("CountryName");
 
                     b.ToTable("Cities");
 
                     b.HasData(
                         new
                         {
-                            CityName = "Göteborg",
-                            CountryName = "Sweden"
+                            CityName = "Göteborg"
                         },
                         new
                         {
-                            CityName = "Stockholm",
-                            CountryName = "Sweden"
-                        },
-                        new
-                        {
-                            CityName = "Kiruna",
-                            CountryName = "Sweden"
-                        },
-                        new
-                        {
-                            CityName = "Västerås",
-                            CountryName = "Sweden"
+                            CityName = "Stockholm"
                         });
                 });
 
@@ -82,10 +69,11 @@ namespace Assignment_MVC.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("City")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CityName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -94,12 +82,9 @@ namespace Assignment_MVC.Migrations
                     b.Property<int>("PhoneNumber")
                         .HasColumnType("int");
 
-                    b.Property<string>("dbCityCityName")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("PersonId");
 
-                    b.HasIndex("dbCityCityName");
+                    b.HasIndex("CityName");
 
                     b.ToTable("People");
 
@@ -107,35 +92,35 @@ namespace Assignment_MVC.Migrations
                         new
                         {
                             PersonId = 1,
-                            CityName = "Kiruna",
+                            City = "Kiruna",
                             Name = "Maja Gräddnos",
                             PhoneNumber = 12345
                         },
                         new
                         {
                             PersonId = 2,
-                            CityName = "Västerås",
+                            City = "Västerås",
                             Name = "Kalle Kaviar",
                             PhoneNumber = 123457
                         },
                         new
                         {
                             PersonId = 3,
-                            CityName = "Stockholm",
+                            City = "Stockholm",
                             Name = "Pelle Svanslös",
                             PhoneNumber = 123458
                         },
                         new
                         {
                             PersonId = 4,
-                            CityName = "Göteborg",
+                            City = "Göteborg",
                             Name = "Frank Franksson",
                             PhoneNumber = 123458
                         },
                         new
                         {
                             PersonId = 5,
-                            CityName = "Göteborg",
+                            City = "Göteborg",
                             Name = "Kalle Söderström",
                             PhoneNumber = 123458
                         });
@@ -143,16 +128,16 @@ namespace Assignment_MVC.Migrations
 
             modelBuilder.Entity("Assignment_MVC.Models.City", b =>
                 {
-                    b.HasOne("Assignment_MVC.Models.Country", "Country")
+                    b.HasOne("Assignment_MVC.Models.Country", null)
                         .WithMany("Cities")
-                        .HasForeignKey("CountryName1");
+                        .HasForeignKey("CountryName");
                 });
 
             modelBuilder.Entity("Assignment_MVC.Models.Person", b =>
                 {
-                    b.HasOne("Assignment_MVC.Models.City", "dbCity")
-                        .WithMany("People")
-                        .HasForeignKey("dbCityCityName");
+                    b.HasOne("Assignment_MVC.Models.City", null)
+                        .WithMany("Inhabitants")
+                        .HasForeignKey("CityName");
                 });
 #pragma warning restore 612, 618
         }

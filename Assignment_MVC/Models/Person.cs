@@ -16,8 +16,14 @@ namespace Assignment_MVC.Models
 
         [Required]
         public int PhoneNumber { get; set; }
-        
-        [Required]
+
+        //Class for JS/AJAX assignment
         public string City { get; set; }
+
+        //Class for DB assignment
+        public string CityName { get; set; }
+        public City dbCity { get; set; }
+
+
     }
 }

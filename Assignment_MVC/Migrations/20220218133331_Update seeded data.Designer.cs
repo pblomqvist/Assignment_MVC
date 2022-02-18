@@ -3,14 +3,16 @@ using Assignment_MVC.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Assignment_MVC.Migrations
 {
     [DbContext(typeof(PersonDbContext))]
-    partial class PersonDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220218133331_Update seeded data")]
+    partial class Updateseededdata
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,12 +96,12 @@ namespace Assignment_MVC.Migrations
                     b.Property<int>("PhoneNumber")
                         .HasColumnType("int");
 
-                    b.Property<string>("dbCityCityName")
+                    b.Property<string>("newCityCityName")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("PersonId");
 
-                    b.HasIndex("dbCityCityName");
+                    b.HasIndex("newCityCityName");
 
                     b.ToTable("People");
 
@@ -150,9 +152,9 @@ namespace Assignment_MVC.Migrations
 
             modelBuilder.Entity("Assignment_MVC.Models.Person", b =>
                 {
-                    b.HasOne("Assignment_MVC.Models.City", "dbCity")
+                    b.HasOne("Assignment_MVC.Models.City", "newCity")
                         .WithMany("People")
-                        .HasForeignKey("dbCityCityName");
+                        .HasForeignKey("newCityCityName");
                 });
 #pragma warning restore 612, 618
         }

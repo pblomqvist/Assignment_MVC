@@ -23,13 +23,15 @@ namespace Assignment_MVC.Models
 
             base.OnModelCreating(modelBuilder);
 
-            //seed people
+            //Setting relationships
+
+            //Seeding
             modelBuilder.Entity<Person>().HasData(
                 new Person
                 {
                     PersonId = 1,
                     Name = "Maja Gräddnos",
-                    City = "Kiruna",
+                    CityName = "Kiruna",
                     PhoneNumber = 12345
                 }
             );
@@ -39,7 +41,7 @@ namespace Assignment_MVC.Models
                 {
                     PersonId = 2,
                     Name = "Kalle Kaviar",
-                    City = "Västerås",
+                    CityName = "Västerås",
                     PhoneNumber = 123457
                 }
             );
@@ -49,7 +51,7 @@ namespace Assignment_MVC.Models
                 {
                     PersonId = 3,
                     Name = "Pelle Svanslös",
-                    City = "Stockholm",
+                    CityName = "Stockholm",
                     PhoneNumber = 123458
                 }
             );
@@ -59,7 +61,7 @@ namespace Assignment_MVC.Models
                 {
                     PersonId = 4,
                     Name = "Frank Franksson",
-                    City = "Göteborg",
+                    CityName = "Göteborg",
                     PhoneNumber = 123458
                 }
             );
@@ -69,8 +71,51 @@ namespace Assignment_MVC.Models
                 {
                     PersonId = 5,
                     Name = "Kalle Söderström",
-                    City = "Göteborg",
+                    CityName = "Göteborg",
                     PhoneNumber = 123458
+                }
+            );
+
+            //Country
+            modelBuilder.Entity<Country>().HasData(
+                new Country
+                {
+                    CountryName = "Sweden"
+                }
+            );
+
+            //City
+
+            modelBuilder.Entity<City>().HasData(
+                new City
+                {
+                    CityName = "Göteborg",
+                    CountryName = "Sweden"
+
+                }
+            );
+
+            modelBuilder.Entity<City>().HasData(
+                new City
+                {
+                    CityName = "Stockholm",
+                    CountryName = "Sweden"
+                }
+            );
+
+            modelBuilder.Entity<City>().HasData(
+                new City
+                {
+                    CityName = "Kiruna",
+                    CountryName = "Sweden"
+                }
+            );
+
+            modelBuilder.Entity<City>().HasData(
+                new City
+                {
+                    CityName = "Västerås",
+                    CountryName = "Sweden"
                 }
             );
 
@@ -79,5 +124,7 @@ namespace Assignment_MVC.Models
 
         //Entities
         public DbSet<Person> People { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<City> Cities { get; set; }
     }
 }

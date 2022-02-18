@@ -1,15 +1,15 @@
-﻿@model IEnumerable<Person>
+﻿@model ICollection<City>
 @{
-    ViewData["Title"] = "Catalogue Database";
+    ViewData["Title"] = "City Database";
 }
 
-<h1>Catalogue Database</h1>
+<h1>City Database</h1>
 <p>Catalogue with data pulled from a database</p>
 
 <a asp-action="Create">Create</a>
 <a asp-action="Index">Refresh list</a>
 
-<form asp-controller="People" asp-action="Index">
+<form asp-controller="City" asp-action="Index">
     <p>
         <input type="text" placeholder="Filter by name..." name="SearchString" />
         <input type="submit" value="Filter" />
@@ -20,10 +20,8 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Phone</th>
                 <th>City</th>
+                <th>Country</th>
 
             </tr>
         </thead>
@@ -31,11 +29,9 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>@item.PersonId</td>
-                    <td>@item.Name</td>
-                    <td>@item.PhoneNumber</td>
                     <td>@item.CityName</td>
-                    <td><a asp-action="Delete" asp-route-id=@item.PersonId>Delete</a></td>
+                    <td>@item.CountryName</td>
+                    <td><a asp-action="Delete" asp-route-CityName=@item.CityName>Delete</a></td>
                 </tr>
             }
 
