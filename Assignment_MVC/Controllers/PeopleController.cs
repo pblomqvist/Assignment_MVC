@@ -1,6 +1,8 @@
 ﻿using Assignment_MVC.Models;
+using Assignment_MVC.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +21,10 @@ namespace Assignment_MVC.Controllers
 
         public IActionResult Index()
         {
-            return View(_personDbContext.People.ToList());
+
+            ICollection<Person> people = _personDbContext.People.Include(c => c.PersonLanguages).ToList();
+
+            return View(people);
         }
 
         public IActionResult Create()
@@ -30,15 +35,31 @@ namespace Assignment_MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Person person)
+        public IActionResult Create(PersonDBCreateViewModel personCrVm)
         {
+
+            ViewData["CityName"] = new SelectList(_personDbContext.Cities, "CityName", "CityName");
+
             if (ModelState.IsValid)
             {
+                Person person = new Person();
+                person.Name = personCrVm.Name;
+                person.PhoneNumber = personCrVm.PhoneNumber;
+                person.CityName = personCrVm.CityName;
+
                 _personDbContext.People.Add(person);
                 _personDbContext.SaveChanges();
+
+                if (person != null)
+                {
+                    return RedirectToAction(nameof(Index), "People");
+                }
+
+                ModelState.AddModelError("Storage", "Failed to save");
+
             }
 
-            return RedirectToAction("Index");
+            return View(personCrVm);
         }
 
         [HttpPost]
@@ -55,6 +76,24 @@ namespace Assignment_MVC.Controllers
             return View(person.ToList());
         }
 
+        public IActionResult Details(int id)
+        {
+
+            var targetPerson = _personDbContext.People.Find(id);
+
+            var languages = _personDbContext.PersonLanguages.Where(pl => pl.PersonId == id).ToList();
+
+            targetPerson.PersonLanguages = languages;
+
+
+            return View(targetPerson);
+        }
+
+        public IActionResult Edit()
+        {
+
+            return View();
+        }
         public IActionResult Delete(int id)
         {
             

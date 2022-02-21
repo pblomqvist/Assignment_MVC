@@ -24,6 +24,24 @@ namespace Assignment_MVC.Models
             base.OnModelCreating(modelBuilder);
 
             //Setting relationships
+            modelBuilder.Entity<PersonLanguage>().HasKey(pl => new { pl.PersonId, pl.LanguageName });
+
+            modelBuilder.Entity<PersonLanguage>()
+                .HasOne<Person>(p => p.Person)
+                .WithMany(pl => pl.PersonLanguages)
+                .HasForeignKey(pl => pl.PersonId)
+                .OnDelete(DeleteBehavior.Cascade); ;
+
+            modelBuilder.Entity<PersonLanguage>()
+                .HasOne<Language>(l => l.Language)
+                .WithMany(pl => pl.PersonLanguages)
+                .HasForeignKey(pl => pl.LanguageName)
+                .OnDelete(DeleteBehavior.Cascade); ;
+
+            modelBuilder.Entity<City>()
+                .HasOne<Country>(c => c.Country)
+                .WithMany(pl => pl.Cities)
+                .HasForeignKey(pl => pl.CountryName);
 
             //Seeding
             modelBuilder.Entity<Person>().HasData(
@@ -119,6 +137,46 @@ namespace Assignment_MVC.Models
                 }
             );
 
+            //Language
+            modelBuilder.Entity<Language>().HasData(
+                new Language
+                {
+                    LanguageName = "Swedish"
+                }
+            );
+
+            modelBuilder.Entity<Language>().HasData(
+                new Language
+                {
+                    LanguageName = "Norwegian"
+                }
+            );
+
+            //PersonLanguage
+            modelBuilder.Entity<PersonLanguage>().HasData(
+                new PersonLanguage
+                {
+                    PersonId = 1,
+                    LanguageName = "Swedish"
+                }
+            );
+
+            modelBuilder.Entity<PersonLanguage>().HasData(
+                new PersonLanguage
+                {
+                    PersonId = 1,
+                    LanguageName = "Norwegian"
+                }
+            );
+
+            modelBuilder.Entity<PersonLanguage>().HasData(
+                new PersonLanguage
+                {
+                    PersonId = 2,
+                    LanguageName = "Norwegian"
+                }
+            );
+
         }
 
 
@@ -126,5 +184,7 @@ namespace Assignment_MVC.Models
         public DbSet<Person> People { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<City> Cities { get; set; }
+        public DbSet<Language> Languages { get; set; }
+        public DbSet<PersonLanguage> PersonLanguages { get; set; }
     }
 }

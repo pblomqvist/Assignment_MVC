@@ -21,18 +21,22 @@
         <thead>
             <tr>
                 <th>Name</th>
-                <th>City</th>
+                <th>Cities</th>
 
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>@item.CountryName</td>
-                    <td>@item.Cities</td>
-                    <td><a asp-action="Delete" asp-route-CountryName=@item.CountryName>Delete</a></td>
-                </tr>
+            <tr>
+                <td>@item.CountryName</td>
+                <td>@item.Cities.Count</td>
+                <td>
+                    <a asp-action="Edit" asp-route-CountryName=@item.CountryName>Edit</a> |
+                    <a asp-action="Details" asp-route-CountryName=@item.CountryName>Details</a> |
+                    <a asp-action="Delete" asp-route-CountryName=@item.CountryName>Delete</a>
+                </td>
+            </tr>
             }
 
         </tbody>

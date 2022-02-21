@@ -15,14 +15,12 @@ namespace Assignment_MVC.ViewModels
         public string Name { get; set; }
 
         [Required]
+        [Display(Name = "Phone")]
         public int PhoneNumber { get; set; }
 
         [RegularExpression("^[a-zA-Z ]*$", ErrorMessage = "City cannot contain numbers")]
         [StringLength(80, MinimumLength = 1)]
         public string City { get; set; }
-
-        public string CityName { get; set; }
-        public City newCity { get; set; }
 
         public PersonCreateViewModel() { }
 

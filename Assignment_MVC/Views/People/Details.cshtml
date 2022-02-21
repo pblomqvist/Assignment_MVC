@@ -1,0 +1,37 @@
+﻿@model Person
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>City</th>
+                <th>Languages</th>
+            </tr>
+        </thead>
+        <tbody>
+                <tr>
+                    <td>@Model.PersonId</td>
+                    <td>@Model.Name</td>
+                    <td>@Model.PhoneNumber</td>
+                    <td>@Model.CityName</td>
+                    <td>
+                    @foreach (PersonLanguage lang in Model.PersonLanguages)
+                    {
+                        @lang.LanguageName <br />
+                    }
+                    </td>
+                    <td>
+                        <a asp-action="">Edit</a> |
+                        <a asp-action="Delete" asp-route-id=@Model.PersonId>Delete person</a>
+                    </td>
+                </tr>
+        </tbody>
+    </table>
+    <a asp-action="Index">Go back</a>
+</div>

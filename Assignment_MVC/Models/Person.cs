@@ -24,6 +24,7 @@ namespace Assignment_MVC.Models
         public string CityName { get; set; }
         public City dbCity { get; set; }
 
+        public ICollection<PersonLanguage> PersonLanguages { get; set; }
 
     }
 }

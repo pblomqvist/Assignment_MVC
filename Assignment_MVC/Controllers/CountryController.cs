@@ -1,5 +1,7 @@
 ﻿using Assignment_MVC.Models;
+using Assignment_MVC.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +20,10 @@ namespace Assignment_MVC.Controllers
 
         public IActionResult Index()
         {
-            return View(_personDbContext.Countries.ToList());
+
+            ICollection<Country> cities = _personDbContext.Countries.Include(c => c.Cities).ToList();
+            
+            return View(cities);
         }
 
         public IActionResult Create()
@@ -27,15 +32,29 @@ namespace Assignment_MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Country country)
+        public IActionResult Create(CountryCreateViewModel countryVm)
         {
+
             if (ModelState.IsValid)
             {
-                _personDbContext.Countries.Add(country);
-                _personDbContext.SaveChanges();
+                Country country = new Country();
+                country.CountryName = countryVm.CountryName;
+
+                if (_personDbContext.Countries.Any(c => c.CountryName == countryVm.CountryName))
+                {
+                    ModelState.AddModelError("duplicate_entry", "Cannot add duplicate entries");
+                    return View(countryVm);
+                }
+                else
+                {
+                    _personDbContext.Countries.Add(country);
+                    _personDbContext.SaveChanges();
+                    return RedirectToAction(nameof(Index), "Country");
+                }
+
             }
 
-            return RedirectToAction("Index");
+            return View(countryVm);
         }
 
         [HttpPost]
@@ -50,6 +69,25 @@ namespace Assignment_MVC.Controllers
             }
 
             return View(country.ToList());
+        }
+
+        public IActionResult Details(string CountryName)
+        {
+
+            var targetCountry = _personDbContext.Countries.Find(CountryName);
+
+            var cities = _personDbContext.Cities.Where(c => c.CountryName == CountryName).ToList();
+
+            targetCountry.Cities = cities;
+
+
+            return View(targetCountry);
+        }
+
+        public IActionResult Edit()
+        {
+
+            return View();
         }
 
         public IActionResult Delete(string CountryName)

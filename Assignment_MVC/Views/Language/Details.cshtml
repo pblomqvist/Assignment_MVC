@@ -1,0 +1,31 @@
+﻿@model Language
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>ID of people speaking</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.LanguageName</td>
+                <td>
+                    @foreach (PersonLanguage person in Model.PersonLanguages)
+                    {
+                        @person.PersonId <br />
+                    }
+                </td>
+                <td>
+                    <a asp-action="">Edit</a> |
+                    <a asp-action="Delete" asp-route-LanguageName=@Model.LanguageName>Delete language</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <a asp-action="Index">Go back</a>
+</div>

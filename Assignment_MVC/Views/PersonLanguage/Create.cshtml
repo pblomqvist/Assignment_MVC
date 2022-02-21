@@ -1,0 +1,20 @@
+﻿@model PersonLanguage
+
+<h1>PersonLanguage Database</h1>
+
+<form asp-action="Create" method="post">
+    <div class="text-danger">
+        @Html.ValidationSummary()
+    </div>
+    <div class="form-group">
+        <label asp-for="PersonId" class="control-label"></label>
+        <select asp-for="PersonId" class="form-control" asp-items="ViewBag.PersonId"></select>
+    </div>
+    <div class="form-group">
+        <label asp-for="LanguageName" class="control-label"></label>
+        <select asp-for="LanguageName" class="form-control" asp-items="ViewBag.LanguageName"></select>
+    </div>
+    <input type="submit" value="Create" class="btn btn-primary" />
+</form>
+
+<a asp-action="Index">Go back</a>

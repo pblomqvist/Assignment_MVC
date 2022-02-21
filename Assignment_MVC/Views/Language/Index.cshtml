@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Language>
+@{
+    ViewData["Title"] = "Language database";
+}
+
+<h1>Language database</h1>
+
+<a asp-action="Create">Create</a>
+<a asp-action="Index">Refresh list</a>
+
+<form asp-controller="People" asp-action="Index">
+    <p>
+        <input type="text" placeholder="Filter by name..." name="SearchString" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
+<div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Language</th>
+                <th>People speaking</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>@item.LanguageName</td>
+                <td>@item.PersonLanguages.Count</td>
+                <td>
+                    <a asp-action="Edit" asp-route-LanguageName="@item.LanguageName">Edit</a> |
+                    <a asp-action="Details" asp-route-LanguageName=@item.LanguageName>Details</a> |
+                    <a asp-action="Delete" asp-route-LanguageName=@item.LanguageName>Delete</a>
+                </td>
+            </tr>
+            }
+
+        </tbody>
+    </table>
+</div>

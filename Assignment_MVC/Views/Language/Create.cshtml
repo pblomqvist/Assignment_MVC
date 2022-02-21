@@ -1,10 +1,10 @@
-﻿@model CountryCreateViewModel
+﻿@model LanguageCreateViewModel
 
 @{
-    ViewData["Title"] = "Create country";
+    ViewData["Title"] = "Create language";
 }
 
-<h1>Create new country</h1>
+<h1>Create new language</h1>
 
 <div class="row">
     <div class="col-md-4">
@@ -13,8 +13,8 @@
         </div>
         <form asp-action="Create" method="post">
             <div class="form-group">
-                <label asp-for="CountryName" class="control-label"></label>
-                <input asp-for="CountryName" class="form-control" />
+                <label asp-for="LanguageName" class="control-label"></label>
+                <input asp-for="LanguageName" class="form-control" />
             </div>
             <input type="submit" value="Create" class="btn btn-primary" />
         </form>

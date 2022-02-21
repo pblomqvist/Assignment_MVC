@@ -1,4 +1,5 @@
 ﻿using Assignment_MVC.Models;
+using Assignment_MVC.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -43,15 +44,37 @@ namespace Assignment_MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(City city)
+        public IActionResult Create(CityCreateViewModel cityVm)
         {
+            ViewData["CountryName"] = new SelectList(_personDbContext.Countries, "CountryName", "CountryName");
+
             if (ModelState.IsValid)
             {
-                _personDbContext.Cities.Add(city);
-                _personDbContext.SaveChanges();
+                City city = new City();
+                city.CityName = cityVm.CityName;
+                city.CountryName = cityVm.CountryName;
+
+                if (_personDbContext.Cities.Any(c => c.CityName == cityVm.CityName))
+                {
+                    ModelState.AddModelError("duplicate_entry", "Cannot add duplicate entries");
+                    return View(cityVm);
+                }
+                else
+                {
+                    _personDbContext.Cities.Add(city);
+                    _personDbContext.SaveChanges();
+                    return RedirectToAction(nameof(Index), "City");
+                }
+
             }
 
-            return RedirectToAction("Index");
+            return View(cityVm);
+        }
+
+        public IActionResult Edit()
+        {
+
+            return View();
         }
 
         public IActionResult Delete(string CityName)

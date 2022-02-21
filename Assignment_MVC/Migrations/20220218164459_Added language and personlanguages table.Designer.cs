@@ -3,14 +3,16 @@ using Assignment_MVC.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Assignment_MVC.Migrations
 {
     [DbContext(typeof(PersonDbContext))]
-    partial class PersonDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220218164459_Added language and personlanguages table")]
+    partial class Addedlanguageandpersonlanguagestable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,11 +26,14 @@ namespace Assignment_MVC.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CountryName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CountryName1")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("CityName");
 
-                    b.HasIndex("CountryName");
+                    b.HasIndex("CountryName1");
 
                     b.ToTable("Cities");
 
@@ -171,30 +176,13 @@ namespace Assignment_MVC.Migrations
                     b.HasIndex("LanguageName");
 
                     b.ToTable("PersonLanguages");
-
-                    b.HasData(
-                        new
-                        {
-                            PersonId = 1,
-                            LanguageName = "Swedish"
-                        },
-                        new
-                        {
-                            PersonId = 1,
-                            LanguageName = "Norwegian"
-                        },
-                        new
-                        {
-                            PersonId = 2,
-                            LanguageName = "Norwegian"
-                        });
                 });
 
             modelBuilder.Entity("Assignment_MVC.Models.City", b =>
                 {
                     b.HasOne("Assignment_MVC.Models.Country", "Country")
                         .WithMany("Cities")
-                        .HasForeignKey("CountryName");
+                        .HasForeignKey("CountryName1");
                 });
 
             modelBuilder.Entity("Assignment_MVC.Models.Person", b =>

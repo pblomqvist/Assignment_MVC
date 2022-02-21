@@ -1,0 +1,32 @@
+﻿@model Country
+@{
+    ViewData["Title"] = "Country Details";
+}
+
+
+<div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Cities</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.CountryName</td>
+                <td>
+                    @foreach (City city in Model.Cities)
+                    {
+                        @city.CityName<br />
+                    }
+                </td>
+                <td>
+                <a asp-action="Delete" asp-route-CountryName=@Model.CountryName>Delete country</a>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <a asp-action="Index">Go back</a>
+</div>
