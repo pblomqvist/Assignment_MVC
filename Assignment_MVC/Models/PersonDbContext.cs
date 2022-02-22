@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Assignment_MVC.Models
 {
-    public class PersonDbContext : DbContext
+    public class PersonDbContext : IdentityDbContext<ApplicationUser>
     {
         public PersonDbContext(DbContextOptions<PersonDbContext> options) : base(options)
         {
@@ -186,5 +187,7 @@ namespace Assignment_MVC.Models
         public DbSet<City> Cities { get; set; }
         public DbSet<Language> Languages { get; set; }
         public DbSet<PersonLanguage> PersonLanguages { get; set; }
+
+        public DbSet<ApplicationUser> Users { get; set; }
     }
 }
