@@ -6,7 +6,7 @@
 <h1>Catalogue Database</h1>
 <p>Catalogue with data pulled from a database</p>
 
-<a asp-action="Create">Create</a>
+<a asp-action="Create">Create</a> |
 <a asp-action="Index">Refresh list</a>
 
 <form asp-controller="People" asp-action="Index">
@@ -31,18 +31,21 @@
         <tbody>
             @foreach (var item in Model)
             {
-            <tr>
-                <td>@item.PersonId</td>
-                <td>@item.Name</td>
-                <td>@item.PhoneNumber</td>
-                <td>@item.CityName</td>
-                <td>@item.PersonLanguages.Count</td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.PersonId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.PersonId">Details</a> |
-                    <a asp-action="Delete" asp-route-id=@item.PersonId>Delete</a>
-                </td>
-            </tr>
+                <tr>
+                    <td>@item.PersonId</td>
+                    <td>@item.Name</td>
+                    <td>@item.PhoneNumber</td>
+                    <td>@item.CityName</td>
+                    <td>@item.PersonLanguages.Count</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.PersonId">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.PersonId">Details</a> |
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a asp-action="Delete" asp-route-id=@item.PersonId>Delete</a>
+                        }
+                    </td>
+                </tr>
             }
 
         </tbody>

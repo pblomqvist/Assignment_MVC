@@ -20,12 +20,22 @@
                 <li class="nav-item"><a class="nav-link" asp-controller="Doctor" asp-action="FeverCheck">Fever Check</a></li>
                 <li class="nav-item"><a class="nav-link" asp-controller="Game" asp-action="GuessingGame">Guessing Game</a></li>
                 <li class="nav-item"><a class="nav-link" asp-controller="Test" asp-action="Index">Catalogue JS</a></li>
-                <li class="nav-item"><a class="nav-link" asp-controller="People" asp-action="Index">People Database</a></li>
-                <li class="nav-item"><a class="nav-link" asp-controller="Country" asp-action="Index">Countries</a></li>
-                <li class="nav-item"><a class="nav-link" asp-controller="City" asp-action="Index">Cities</a></li>
-                <li class="nav-item"><a class="nav-link" asp-controller="Language" asp-action="Index">Languages</a></li>
-                <li class="nav-item"><a class="nav-link" asp-controller="PersonLanguage" asp-action="Index">PersonLanguage</a></li>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li class="nav-item"><a class="nav-link" asp-controller="People" asp-action="Index">People Database</a></li>
+                }
+                @if (User.IsInRole("Admin"))
+                {
+                    <li class="nav-item"><a class="nav-link" asp-controller="Country" asp-action="Index">Countries</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="City" asp-action="Index">Cities</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Language" asp-action="Index">Languages</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="PersonLanguage" asp-action="Index">PersonLanguage</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Role" asp-action="Index">User roles</a></li>
+                }
             </ul>
+            <div class="d-flex">
+                <partial name="_LoginPartial" />
+            </div>
         </div>
 
     </nav>

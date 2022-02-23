@@ -1,4 +1,5 @@
 ﻿using Assignment_MVC.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Assignment_MVC.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class PersonLanguageController : Controller
     {
         private readonly PersonDbContext _personDbContext;

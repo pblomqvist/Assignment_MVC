@@ -1,5 +1,6 @@
 ﻿using Assignment_MVC.Models;
 using Assignment_MVC.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Assignment_MVC.Controllers
 {
+    [Authorize]
     public class PeopleController : Controller
     {
 
@@ -94,6 +96,8 @@ namespace Assignment_MVC.Controllers
 
             return View();
         }
+
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             

@@ -4,14 +4,16 @@ using Assignment_MVC.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Assignment_MVC.Migrations
 {
     [DbContext(typeof(PersonDbContext))]
-    partial class PersonDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220223125552_Updated user-table")]
+    partial class Updatedusertable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -93,27 +95,6 @@ namespace Assignment_MVC.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "26c2c9f7-6776-4a41-94d4-b4d49dea44b4",
-                            AccessFailedCount = 0,
-                            BirthDate = new DateTime(1987, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "8c17ba34-e7d0-49a4-a10d-2ddc82a54256",
-                            Email = "admin@admin.com",
-                            EmailConfirmed = false,
-                            FirstName = "Admin",
-                            LastName = "Adminsson",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "ADMIN@ADMIN.COM",
-                            NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGrHC5ZE5KlyROLDWfcp38m6jQM9ePnob0M4JJwLeRTxxq6bskmgEIMjz6wyerRpNQ==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "4f2032f1-d4f8-43a9-b809-66099b33d3a5",
-                            TwoFactorEnabled = false,
-                            UserName = "admin@admin.com"
-                        });
                 });
 
             modelBuilder.Entity("Assignment_MVC.Models.City", b =>
@@ -313,22 +294,6 @@ namespace Assignment_MVC.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "bfd8e61a-8a6c-412b-875e-0df1dabc28b1",
-                            ConcurrencyStamp = "9453bcb7-5db8-4b33-952e-b89757192ba1",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "26c2c9f7-6776-4a41-94d4-b4d49dea44b4",
-                            ConcurrencyStamp = "bc48ee3e-33cd-4626-8278-71307ffcae55",
-                            Name = "User",
-                            NormalizedName = "USER"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -414,13 +379,6 @@ namespace Assignment_MVC.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "26c2c9f7-6776-4a41-94d4-b4d49dea44b4",
-                            RoleId = "bfd8e61a-8a6c-412b-875e-0df1dabc28b1"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

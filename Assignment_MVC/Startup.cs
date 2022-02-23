@@ -34,6 +34,8 @@ namespace Assignment_MVC
             services.AddHttpContextAccessor();
             services.AddSession();
 
+            services.AddRazorPages();
+
             services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
                     .AddDefaultUI()
                     .AddDefaultTokenProviders()
@@ -72,6 +74,7 @@ namespace Assignment_MVC
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}"
                     );
+                endpoints.MapRazorPages();
             });
         }
     }

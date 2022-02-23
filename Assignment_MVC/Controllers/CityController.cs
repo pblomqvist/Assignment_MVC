@@ -1,5 +1,6 @@
 ﻿using Assignment_MVC.Models;
 using Assignment_MVC.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Assignment_MVC.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class CityController : Controller
     {
         private readonly PersonDbContext _personDbContext;
