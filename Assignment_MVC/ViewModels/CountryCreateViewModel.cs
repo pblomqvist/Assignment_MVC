@@ -11,7 +11,7 @@ namespace Assignment_MVC.ViewModels
     {
 
         [Required]
-        [RegularExpression("^[a-zA-Z ]*$", ErrorMessage = "Name cannot contain numbers")]
+        [RegularExpression("^[a-zA-ZÀ-ÿ ]*$", ErrorMessage = "Name cannot contain numbers")]
         [Display(Name = "Country")]
         [StringLength(80, MinimumLength = 1)]
         public string CountryName { get; set; }

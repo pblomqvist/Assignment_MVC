@@ -12,7 +12,7 @@ namespace Assignment_MVC.ViewModels
         //Viewmodel for /Person/Create in order to keep /Test/Create intact
 
         [Required]
-        [RegularExpression("^[a-zA-Z ]*$", ErrorMessage = "Name cannot contain numbers or special characters")]
+        [RegularExpression("^[a-zA-ZÀ-ÿ ]*$", ErrorMessage = "Name cannot contain numbers or special characters")]
         [StringLength(80, MinimumLength = 1)]
         public string Name { get; set; }
 
@@ -20,22 +20,29 @@ namespace Assignment_MVC.ViewModels
         [Display(Name = "Phone")]
         public int PhoneNumber { get; set; }
 
+        [Display(Name = "Country")]
+        public int CountryId { get; set; }
+        public Country Country { get; set; }
+
+        public IList<Country> Countries { get; set; }
+
         [Display(Name = "City")]
-        public string CityName { get; set; }
+        public int CityId { get; set; }
         public City city { get; set; }
 
         [Display(Name = "Language")]
-        public string LanguageName { get; set; }
+        public int LanguageId { get; set; }
         public Language Language { get; set; }
 
+        public IList<Language> Languages { get; set; }
 
         public PersonDBCreateViewModel() { }
 
-        public PersonDBCreateViewModel(string name, int phone, string city)
+        public PersonDBCreateViewModel(string name, int phone, int city)
         {
             Name = name;
             PhoneNumber = phone;
-            CityName = city;
+            CityId = city;
         }
 
     }

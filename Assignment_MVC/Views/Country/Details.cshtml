@@ -8,12 +8,14 @@
     <table class="table table-striped">
         <thead>
             <tr>
+                <th>Id</th>
                 <th>Name</th>
                 <th>Cities</th>
             </tr>
         </thead>
         <tbody>
             <tr>
+                <td>@Model.CountryId</td>
                 <td>@Model.CountryName</td>
                 <td>
                     @foreach (City city in Model.Cities)
@@ -22,7 +24,7 @@
                     }
                 </td>
                 <td>
-                <a asp-action="Delete" asp-route-CountryName=@Model.CountryName>Delete country</a>
+                <a asp-action="Delete" asp-route-CountryId=@Model.CountryId>Delete country</a>
                 </td>
             </tr>
 

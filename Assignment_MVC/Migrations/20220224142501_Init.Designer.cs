@@ -4,14 +4,16 @@ using Assignment_MVC.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Assignment_MVC.Migrations
 {
     [DbContext(typeof(PersonDbContext))]
-    partial class PersonDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220224142501_Init")]
+    partial class Init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -97,10 +99,10 @@ namespace Assignment_MVC.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "25bbde6b-1f95-4877-a880-cd0b1ae7d553",
+                            Id = "398dbbf5-fa6a-49ec-af23-173533342773",
                             AccessFailedCount = 0,
                             BirthDate = new DateTime(1987, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "55a23e82-2798-4698-855b-3c7a3b2241ee",
+                            ConcurrencyStamp = "d3e4ccb2-ae8a-45e1-a4c9-ecd56e59a613",
                             Email = "admin@admin.com",
                             EmailConfirmed = false,
                             FirstName = "Admin",
@@ -108,9 +110,9 @@ namespace Assignment_MVC.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKkm/3NCMC5IzlLPMo4YDMqgFRtZJ9CCXzN9QlsCqVCW6rRCdzN9BSKiRu/Y/rAm6Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENGZVDGvQ7undRVUHXa9eAgIyP2G6i/72bDAqae6wkHdLQnHr4BnqttqkVG5wRT6bA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a0179751-3196-492f-8fb0-01c59c3bffb7",
+                            SecurityStamp = "9ee66990-8217-46c6-86cf-a90fab0d82dd",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -186,30 +188,6 @@ namespace Assignment_MVC.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Assignment_MVC.Models.DbPerson", b =>
-                {
-                    b.Property<int>("PersonId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CityId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PhoneNumber")
-                        .HasColumnType("int");
-
-                    b.HasKey("PersonId");
-
-                    b.HasIndex("CityId");
-
-                    b.ToTable("DbPerson");
-                });
-
             modelBuilder.Entity("Assignment_MVC.Models.Language", b =>
                 {
                     b.Property<int>("LanguageId")
@@ -250,9 +228,6 @@ namespace Assignment_MVC.Migrations
 
                     b.Property<int>("CityId")
                         .HasColumnType("int");
-
-                    b.Property<string>("CityName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -313,12 +288,7 @@ namespace Assignment_MVC.Migrations
                     b.Property<int>("LanguageId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("DbPersonPersonId")
-                        .HasColumnType("int");
-
                     b.HasKey("PersonId", "LanguageId");
-
-                    b.HasIndex("DbPersonPersonId");
 
                     b.HasIndex("LanguageId");
 
@@ -371,15 +341,15 @@ namespace Assignment_MVC.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "76feee72-1ed2-4ebb-ba0b-cf9fbf571a97",
-                            ConcurrencyStamp = "7f6f480d-835a-4437-90a1-52de8160df02",
+                            Id = "aaa5c369-25c3-47c1-8fc9-9a61a6bdd2ee",
+                            ConcurrencyStamp = "d0880c0d-d68b-42ca-9497-326a5e839dd4",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "25bbde6b-1f95-4877-a880-cd0b1ae7d553",
-                            ConcurrencyStamp = "4d438611-6900-4a1e-9394-fef833ffd7c6",
+                            Id = "398dbbf5-fa6a-49ec-af23-173533342773",
+                            ConcurrencyStamp = "985eeea6-1a30-4bb7-af39-6cae58a7638c",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -472,8 +442,8 @@ namespace Assignment_MVC.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "25bbde6b-1f95-4877-a880-cd0b1ae7d553",
-                            RoleId = "76feee72-1ed2-4ebb-ba0b-cf9fbf571a97"
+                            UserId = "398dbbf5-fa6a-49ec-af23-173533342773",
+                            RoleId = "aaa5c369-25c3-47c1-8fc9-9a61a6bdd2ee"
                         });
                 });
 
@@ -505,19 +475,10 @@ namespace Assignment_MVC.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Assignment_MVC.Models.DbPerson", b =>
-                {
-                    b.HasOne("Assignment_MVC.Models.City", "City")
-                        .WithMany("People")
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Assignment_MVC.Models.Person", b =>
                 {
-                    b.HasOne("Assignment_MVC.Models.City", "DbCity")
-                        .WithMany()
+                    b.HasOne("Assignment_MVC.Models.City", "dbCity")
+                        .WithMany("People")
                         .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -525,10 +486,6 @@ namespace Assignment_MVC.Migrations
 
             modelBuilder.Entity("Assignment_MVC.Models.PersonLanguage", b =>
                 {
-                    b.HasOne("Assignment_MVC.Models.DbPerson", null)
-                        .WithMany("PersonLanguages")
-                        .HasForeignKey("DbPersonPersonId");
-
                     b.HasOne("Assignment_MVC.Models.Language", "Language")
                         .WithMany("PersonLanguages")
                         .HasForeignKey("LanguageId")

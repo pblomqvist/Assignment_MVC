@@ -10,7 +10,7 @@ namespace Assignment_MVC.Models
         public int PersonId { get; set; }
         public Person Person { get; set; }
 
-        public string LanguageName { get; set; }
+        public int LanguageId { get; set; }
         public Language Language { get; set; }
     }
 }

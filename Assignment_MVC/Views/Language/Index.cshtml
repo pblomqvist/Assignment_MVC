@@ -19,7 +19,8 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Language</th>
+                <th>Id</th>
+                <th>Name</th>
                 <th>People speaking</th>
             </tr>
         </thead>
@@ -27,12 +28,13 @@
             @foreach (var item in Model)
             {
             <tr>
+                <td>@item.LanguageId</td>
                 <td>@item.LanguageName</td>
                 <td>@item.PersonLanguages.Count</td>
                 <td>
-                    <a asp-action="Edit" asp-route-LanguageName="@item.LanguageName">Edit</a> |
-                    <a asp-action="Details" asp-route-LanguageName=@item.LanguageName>Details</a> |
-                    <a asp-action="Delete" asp-route-LanguageName=@item.LanguageName>Delete</a>
+                    <a asp-action="Edit" asp-route-LanguageId="@item.LanguageId">Edit</a> |
+                    <a asp-action="Details" asp-route-LanguageId=@item.LanguageId>Details</a> |
+                    <a asp-action="Delete" asp-route-LanguageId=@item.LanguageId>Delete</a>
                 </td>
             </tr>
             }

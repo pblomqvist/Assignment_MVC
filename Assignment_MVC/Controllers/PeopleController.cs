@@ -24,44 +24,11 @@ namespace Assignment_MVC.Controllers
         public IActionResult Index()
         {
 
-            ICollection<Person> people = _personDbContext.People.Include(c => c.PersonLanguages).ToList();
+            ICollection<Person> people = _personDbContext.People
+                .Include(c => c.PersonLanguages)
+                .ToList();
 
             return View(people);
-        }
-
-        public IActionResult Create()
-        {
-            ViewData["CityName"] = new SelectList(_personDbContext.Cities, "CityName", "CityName");
-
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult Create(PersonDBCreateViewModel personCrVm)
-        {
-
-            ViewData["CityName"] = new SelectList(_personDbContext.Cities, "CityName", "CityName");
-
-            if (ModelState.IsValid)
-            {
-                Person person = new Person();
-                person.Name = personCrVm.Name;
-                person.PhoneNumber = personCrVm.PhoneNumber;
-                person.CityName = personCrVm.CityName;
-
-                _personDbContext.People.Add(person);
-                _personDbContext.SaveChanges();
-
-                if (person != null)
-                {
-                    return RedirectToAction(nameof(Index), "People");
-                }
-
-                ModelState.AddModelError("Storage", "Failed to save");
-
-            }
-
-            return View(personCrVm);
         }
 
         [HttpPost]
@@ -78,6 +45,57 @@ namespace Assignment_MVC.Controllers
             return View(person.ToList());
         }
 
+        public IActionResult Create(IList<Language> langs, PersonDBCreateViewModel viewModel)
+        {
+            ViewData["CityName"] = new SelectList(_personDbContext.Cities, "CityId", "CityName");
+            ViewData["Countries"] = new SelectList(_personDbContext.Countries, "CountryId", "CountryName");
+
+            langs = _personDbContext.Languages.ToList();
+
+            viewModel.Languages = langs;
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Create(PersonDBCreateViewModel personCrVm, string[] languages)
+        {
+
+            ViewData["CityName"] = new SelectList(_personDbContext.Cities, "CityId", "CityName");
+            ViewData["Countries"] = new SelectList(_personDbContext.Countries, "CountryId", "CountryName");
+
+            if (ModelState.IsValid)
+            {
+                PersonLanguage newPersonLanguage = new PersonLanguage();
+                Person person = new Person();
+                person.Name = personCrVm.Name;
+                person.PhoneNumber = personCrVm.PhoneNumber;
+                person.CityId = personCrVm.CityId;
+
+                _personDbContext.People.Add(person);
+                _personDbContext.SaveChanges();
+
+                foreach (var item in languages)
+                {
+                    newPersonLanguage.LanguageId = Int32.Parse(item);
+                    newPersonLanguage.PersonId = person.PersonId;
+                    _personDbContext.PersonLanguages.Add(newPersonLanguage);
+                    _personDbContext.SaveChanges();
+                }
+
+
+                if (person != null)
+                {
+                    return RedirectToAction(nameof(Index), "People");
+                }
+
+                ModelState.AddModelError("Storage", "Failed to save");
+
+            }
+
+            return View(personCrVm);
+        }
+
         public IActionResult Details(int id)
         {
 
@@ -85,16 +103,53 @@ namespace Assignment_MVC.Controllers
 
             var languages = _personDbContext.PersonLanguages.Where(pl => pl.PersonId == id).ToList();
 
+            var city = from c in _personDbContext.Cities
+                       where c.CityId == targetPerson.CityId
+                       select c.CityName;
+
+            targetPerson.CityName = city.FirstOrDefault().ToString();
+
             targetPerson.PersonLanguages = languages;
+
 
 
             return View(targetPerson);
         }
 
-        public IActionResult Edit()
+        public IActionResult Edit(int id)
         {
+            ViewData["CityName"] = new SelectList(_personDbContext.Cities, "CityId", "CityName");
+            var targetPerson = _personDbContext.People.Find(id);
 
-            return View();
+            return View(targetPerson);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(int id, PersonDBCreateViewModel viewModel)
+        {
+            ViewData["CityName"] = new SelectList(_personDbContext.Cities, "CityName", "CityName");
+            Person person = _personDbContext.People.FirstOrDefault(p => p.PersonId == id);
+
+            if (ModelState.IsValid)
+            {
+                person.Name = viewModel.Name;
+                person.PhoneNumber = viewModel.PhoneNumber;
+                person.CityId = viewModel.CityId;
+
+                _personDbContext.People.Update(person);
+                _personDbContext.SaveChanges();
+
+                if (person != null)
+                {
+                    return RedirectToAction(nameof(Index), "People");
+                }
+
+                ModelState.AddModelError("Storage", "Failed to save");
+
+            }
+
+            return View(viewModel);
+
         }
 
         [Authorize(Roles = "Admin")]

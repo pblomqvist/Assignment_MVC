@@ -40,7 +40,7 @@ namespace Assignment_MVC.Controllers
 
         public IActionResult Create()
         {
-            ViewData["CountryName"] = new SelectList(_personDbContext.Countries, "CountryName", "CountryName");
+            ViewData["Countries"] = new SelectList(_personDbContext.Countries, "CountryId", "CountryName");
 
             return View();
         }
@@ -48,13 +48,13 @@ namespace Assignment_MVC.Controllers
         [HttpPost]
         public IActionResult Create(CityCreateViewModel cityVm)
         {
-            ViewData["CountryName"] = new SelectList(_personDbContext.Countries, "CountryName", "CountryName");
+            ViewData["Countries"] = new SelectList(_personDbContext.Countries, "CountryId", "CountryName");
 
             if (ModelState.IsValid)
             {
                 City city = new City();
                 city.CityName = cityVm.CityName;
-                city.CountryName = cityVm.CountryName;
+                city.CountryId = cityVm.CountryId;
 
                 if (_personDbContext.Cities.Any(c => c.CityName == cityVm.CityName))
                 {
@@ -73,16 +73,45 @@ namespace Assignment_MVC.Controllers
             return View(cityVm);
         }
 
-        public IActionResult Edit()
+        public IActionResult Edit(int CityId)
         {
+            ViewData["Countries"] = new SelectList(_personDbContext.Countries, "CountryId", "CountryName");
+            var targetCity = _personDbContext.Cities.Find(CityId);
 
-            return View();
+            return View(targetCity);
         }
 
-        public IActionResult Delete(string CityName)
+        [HttpPost]
+        public IActionResult Edit(int CityId, CityCreateViewModel viewModel)
+        {
+            ViewData["Countries"] = new SelectList(_personDbContext.Countries, "CountryId", "CountryName");
+            City city = _personDbContext.Cities.Where(c => c.CityId == CityId).FirstOrDefault();
+
+            if (ModelState.IsValid)
+            {
+                city.CityName = viewModel.CityName;
+                city.CountryId = viewModel.CountryId;
+
+                _personDbContext.Cities.Update(city);
+                _personDbContext.SaveChanges();
+
+                if (city != null)
+                {
+                    return RedirectToAction(nameof(Index), "City");
+                }
+
+                ModelState.AddModelError("Storage", "Failed to save");
+
+            }
+
+            return View(viewModel);
+
+        }
+
+        public IActionResult Delete(int CityId)
         {
 
-            var targetCity = _personDbContext.Cities.FirstOrDefault(c => c.CityName == CityName);
+            var targetCity = _personDbContext.Cities.FirstOrDefault(c => c.CityId == CityId);
             _personDbContext.Cities.Remove(targetCity);
             _personDbContext.SaveChanges();
 

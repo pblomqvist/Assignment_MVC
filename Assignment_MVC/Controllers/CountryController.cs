@@ -2,6 +2,7 @@
 using Assignment_MVC.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -59,6 +60,7 @@ namespace Assignment_MVC.Controllers
             return View(countryVm);
         }
 
+
         [HttpPost]
         public IActionResult Index(string searchString)
         {
@@ -73,12 +75,12 @@ namespace Assignment_MVC.Controllers
             return View(country.ToList());
         }
 
-        public IActionResult Details(string CountryName)
+        public IActionResult Details(int CountryId)
         {
 
-            var targetCountry = _personDbContext.Countries.Find(CountryName);
+            var targetCountry = _personDbContext.Countries.Find(CountryId);
 
-            var cities = _personDbContext.Cities.Where(c => c.CountryName == CountryName).ToList();
+            var cities = _personDbContext.Cities.Where(c => c.CountryId == CountryId).ToList();
 
             targetCountry.Cities = cities;
 
@@ -86,16 +88,42 @@ namespace Assignment_MVC.Controllers
             return View(targetCountry);
         }
 
-        public IActionResult Edit()
+        public IActionResult Edit(int CountryId)
         {
+            var targetCountry = _personDbContext.Countries.Find(CountryId);
 
-            return View();
+            return View(targetCountry);
         }
 
-        public IActionResult Delete(string CountryName)
+        [HttpPost]
+        public IActionResult Edit(int CountryId, CountryCreateViewModel viewModel)
+        {
+            Country country = _personDbContext.Countries.Where(c => c.CountryId == CountryId).FirstOrDefault();
+
+            if (ModelState.IsValid)
+            {
+                country.CountryName = viewModel.CountryName;
+
+                _personDbContext.Countries.Update(country);
+                _personDbContext.SaveChanges();
+
+                if (country != null)
+                {
+                    return RedirectToAction(nameof(Index), "Country");
+                }
+
+                ModelState.AddModelError("Storage", "Failed to save");
+
+            }
+
+            return View(viewModel);
+
+        }
+
+        public IActionResult Delete(int CountryId)
         {
 
-            var targetCity = _personDbContext.Countries.FirstOrDefault(c => c.CountryName == CountryName);
+            var targetCity = _personDbContext.Countries.FirstOrDefault(c => c.CountryId == CountryId);
             _personDbContext.Countries.Remove(targetCity);
             _personDbContext.SaveChanges();
 

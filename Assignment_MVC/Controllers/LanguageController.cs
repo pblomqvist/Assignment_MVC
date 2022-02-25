@@ -55,12 +55,12 @@ namespace Assignment_MVC.Controllers
             return View(languageCrVm);
         }
 
-        public IActionResult Details(string LanguageName)
+        public IActionResult Details(int LanguageId)
         {
 
-            var targetLanguage = _personDbContext.Languages.Find(LanguageName);
+            var targetLanguage = _personDbContext.Languages.Find(LanguageId);
 
-            var people = _personDbContext.PersonLanguages.Where(pl => pl.LanguageName == LanguageName).ToList();
+            var people = _personDbContext.PersonLanguages.Where(pl => pl.LanguageId == LanguageId).ToList();
 
             targetLanguage.PersonLanguages = people;
 
@@ -68,16 +68,42 @@ namespace Assignment_MVC.Controllers
             return View(targetLanguage);
         }
 
-        public IActionResult Edit()
+        public IActionResult Edit(int LanguageId)
         {
+            var targetLanguage = _personDbContext.Languages.Find(LanguageId);
 
-            return View();
+            return View(targetLanguage);
         }
 
-        public IActionResult Delete(string LanguageName)
+        [HttpPost]
+        public IActionResult Edit(int LanguageId, LanguageCreateViewModel viewModel)
+        {
+            Language language = _personDbContext.Languages.Where(c => c.LanguageId == LanguageId).FirstOrDefault();
+
+            if (ModelState.IsValid)
+            {
+                language.LanguageName = viewModel.LanguageName;
+
+                _personDbContext.Languages.Update(language);
+                _personDbContext.SaveChanges();
+
+                if (language != null)
+                {
+                    return RedirectToAction(nameof(Index), "Language");
+                }
+
+                ModelState.AddModelError("Storage", "Failed to save");
+
+            }
+
+            return View(viewModel);
+
+        }
+
+        public IActionResult Delete(int LanguageId)
         {
 
-            var targetLanguage = _personDbContext.Languages.FirstOrDefault(c => c.LanguageName == LanguageName);
+            var targetLanguage = _personDbContext.Languages.FirstOrDefault(c => c.LanguageId == LanguageId);
             _personDbContext.Languages.Remove(targetLanguage);
             _personDbContext.SaveChanges();
 

@@ -20,6 +20,7 @@
     <table class="table table-striped">
         <thead>
             <tr>
+                <th>Id</th>
                 <th>Name</th>
                 <th>Cities</th>
 
@@ -29,12 +30,13 @@
             @foreach (var item in Model)
             {
             <tr>
+                <td>@item.CountryId</td>
                 <td>@item.CountryName</td>
                 <td>@item.Cities.Count</td>
                 <td>
-                    <a asp-action="Edit" asp-route-CountryName=@item.CountryName>Edit</a> |
-                    <a asp-action="Details" asp-route-CountryName=@item.CountryName>Details</a> |
-                    <a asp-action="Delete" asp-route-CountryName=@item.CountryName>Delete</a>
+                    <a asp-action="Edit" asp-route-CountryId="@item.CountryId">Edit</a> |
+                    <a asp-action="Details" asp-route-CountryId="@item.CountryId">Details</a> |
+                    <a asp-action="Delete" asp-route-CountryId="@item.CountryId">Delete</a>
                 </td>
             </tr>
             }

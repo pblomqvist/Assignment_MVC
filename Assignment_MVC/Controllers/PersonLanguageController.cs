@@ -26,36 +26,54 @@ namespace Assignment_MVC.Controllers
 
         public IActionResult Create()
         {
-            ViewData["PersonId"] = new SelectList(_personDbContext.People, "PersonId", "PersonId");
-            ViewData["LanguageName"] = new SelectList(_personDbContext.Languages, "LanguageName", "LanguageName");
+            ViewData["People"] = new SelectList(_personDbContext.People, "PersonId", "PersonId");
+            ViewData["Languages"] = new SelectList(_personDbContext.Languages, "LanguageId", "LanguageName");
 
             return View();
         }
 
         [HttpPost]
-        public IActionResult Create(PersonLanguage personLanguage)
+        public IActionResult Create(PersonLanguage model)
         {
 
-            ViewData["PersonId"] = new SelectList(_personDbContext.People, "PersonId", "PersonId");
-            ViewData["LanguageName"] = new SelectList(_personDbContext.Languages, "LanguageName", "LanguageName");
+            ViewData["People"] = new SelectList(_personDbContext.People, "PersonId", "PersonId");
+            ViewData["Languages"] = new SelectList(_personDbContext.Languages, "LanguageId", "LanguageName");
 
             if (ModelState.IsValid)
             {
-                
-                if (_personDbContext.PersonLanguages.Any(p => p.PersonId == personLanguage.PersonId))
+                ICollection<PersonLanguage> personLanguages = _personDbContext.PersonLanguages.ToList();
+
+                foreach (var item in personLanguages)
                 {
-                    ModelState.AddModelError("duplicate_entry", "Cannot add duplicate entries");
-                    return View(personLanguage);
-                } else
-                {
-                    _personDbContext.PersonLanguages.Add(personLanguage);
-                    _personDbContext.SaveChanges();
-                    return RedirectToAction(nameof(Index), "PersonLanguage");
+
+                    if (item.LanguageId == model.LanguageId & item.PersonId == model.PersonId)
+                    {
+                        ModelState.AddModelError("duplicate_entry", "Cannot add duplicate entries");
+                        return View(model);
+                    }
+                    else
+                    {
+                        _personDbContext.PersonLanguages.Add(model);
+                        _personDbContext.SaveChanges();
+                        return RedirectToAction(nameof(Index), "PersonLanguage");
+                    }
+
                 }
 
             }
 
-            return View(personLanguage);
+            return View(model);
         }
+
+        public IActionResult Delete(int PersonId)
+        {
+
+            var targetPl = _personDbContext.PersonLanguages.FirstOrDefault(pl => pl.PersonId == PersonId);
+            _personDbContext.PersonLanguages.Remove(targetPl);
+            _personDbContext.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
     }
 }

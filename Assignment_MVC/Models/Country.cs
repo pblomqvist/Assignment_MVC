@@ -9,6 +9,10 @@ namespace Assignment_MVC.Models
     public class Country
     {
         [Key]
+        [Display(Name = "Id")]
+        public int CountryId { get; set; }
+
+        [Required]
         [Display(Name = "Name")]
         public string CountryName { get; set; }
 

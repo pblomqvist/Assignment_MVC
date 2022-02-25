@@ -26,7 +26,7 @@ namespace Assignment_MVC.Models
             base.OnModelCreating(modelBuilder);
 
             //Setting relationships
-            modelBuilder.Entity<PersonLanguage>().HasKey(pl => new { pl.PersonId, pl.LanguageName });
+            modelBuilder.Entity<PersonLanguage>().HasKey(pl => new { pl.PersonId, pl.LanguageId });
 
             modelBuilder.Entity<PersonLanguage>()
                 .HasOne<Person>(p => p.Person)
@@ -37,13 +37,17 @@ namespace Assignment_MVC.Models
             modelBuilder.Entity<PersonLanguage>()
                 .HasOne<Language>(l => l.Language)
                 .WithMany(pl => pl.PersonLanguages)
-                .HasForeignKey(pl => pl.LanguageName)
+                .HasForeignKey(pl => pl.LanguageId)
                 .OnDelete(DeleteBehavior.Cascade); ;
 
             modelBuilder.Entity<City>()
                 .HasOne<Country>(c => c.Country)
-                .WithMany(pl => pl.Cities)
-                .HasForeignKey(pl => pl.CountryName);
+                .WithMany(c => c.Cities)
+                .HasForeignKey(c => c.CountryId);
+
+            modelBuilder.Entity<Person>()
+            .Property(p => p.City)
+            .IsRequired(false);
 
             //Seeding
             modelBuilder.Entity<Person>().HasData(
@@ -51,7 +55,7 @@ namespace Assignment_MVC.Models
                 {
                     PersonId = 1,
                     Name = "Maja Gräddnos",
-                    CityName = "Kiruna",
+                    CityId = 3,
                     PhoneNumber = 12345
                 }
             );
@@ -61,7 +65,7 @@ namespace Assignment_MVC.Models
                 {
                     PersonId = 2,
                     Name = "Kalle Kaviar",
-                    CityName = "Västerås",
+                    CityId = 4,
                     PhoneNumber = 123457
                 }
             );
@@ -71,7 +75,7 @@ namespace Assignment_MVC.Models
                 {
                     PersonId = 3,
                     Name = "Pelle Svanslös",
-                    CityName = "Stockholm",
+                    CityId = 2,
                     PhoneNumber = 123458
                 }
             );
@@ -81,7 +85,7 @@ namespace Assignment_MVC.Models
                 {
                     PersonId = 4,
                     Name = "Frank Franksson",
-                    CityName = "Göteborg",
+                    CityId = 1,
                     PhoneNumber = 123458
                 }
             );
@@ -91,7 +95,7 @@ namespace Assignment_MVC.Models
                 {
                     PersonId = 5,
                     Name = "Kalle Söderström",
-                    CityName = "Göteborg",
+                    CityId = 1,
                     PhoneNumber = 123458
                 }
             );
@@ -100,6 +104,7 @@ namespace Assignment_MVC.Models
             modelBuilder.Entity<Country>().HasData(
                 new Country
                 {
+                    CountryId = 1,
                     CountryName = "Sweden"
                 }
             );
@@ -109,33 +114,36 @@ namespace Assignment_MVC.Models
             modelBuilder.Entity<City>().HasData(
                 new City
                 {
-                    CityName = "Göteborg",
-                    CountryName = "Sweden"
-
+                    CountryId = 1,
+                    CityId = 1,
+                    CityName = "Göteborg"
                 }
             );
 
             modelBuilder.Entity<City>().HasData(
                 new City
                 {
-                    CityName = "Stockholm",
-                    CountryName = "Sweden"
+                    CountryId = 1,
+                    CityId = 2,
+                    CityName = "Stockholm"
                 }
             );
 
             modelBuilder.Entity<City>().HasData(
                 new City
                 {
-                    CityName = "Kiruna",
-                    CountryName = "Sweden"
+                    CountryId = 1,
+                    CityId = 3,
+                    CityName = "Kiruna"
                 }
             );
 
             modelBuilder.Entity<City>().HasData(
                 new City
                 {
-                    CityName = "Västerås",
-                    CountryName = "Sweden"
+                    CountryId = 1,
+                    CityId = 4,
+                    CityName = "Västerås"
                 }
             );
 
@@ -143,6 +151,7 @@ namespace Assignment_MVC.Models
             modelBuilder.Entity<Language>().HasData(
                 new Language
                 {
+                    LanguageId = 1,
                     LanguageName = "Swedish"
                 }
             );
@@ -150,6 +159,7 @@ namespace Assignment_MVC.Models
             modelBuilder.Entity<Language>().HasData(
                 new Language
                 {
+                    LanguageId = 2,
                     LanguageName = "Norwegian"
                 }
             );
@@ -159,7 +169,7 @@ namespace Assignment_MVC.Models
                 new PersonLanguage
                 {
                     PersonId = 1,
-                    LanguageName = "Swedish"
+                    LanguageId = 1
                 }
             );
 
@@ -167,7 +177,7 @@ namespace Assignment_MVC.Models
                 new PersonLanguage
                 {
                     PersonId = 1,
-                    LanguageName = "Norwegian"
+                    LanguageId = 2
                 }
             );
 
@@ -175,7 +185,7 @@ namespace Assignment_MVC.Models
                 new PersonLanguage
                 {
                     PersonId = 2,
-                    LanguageName = "Norwegian"
+                    LanguageId = 2
                 }
             );
 

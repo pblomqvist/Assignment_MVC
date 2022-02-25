@@ -9,6 +9,10 @@ namespace Assignment_MVC.Models
     public class Language
     {
         [Key]
+        [Display(Name = "Id")]
+        public int LanguageId { get; set; }
+
+        [Required]
         [Display(Name = "Name")]
         public string LanguageName { get; set; }
 

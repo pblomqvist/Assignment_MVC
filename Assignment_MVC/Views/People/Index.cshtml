@@ -23,7 +23,7 @@
                 <th>Id</th>
                 <th>Name</th>
                 <th>Phone</th>
-                <th>City</th>
+                <th>City Id</th>
                 <th>Languages known</th>
 
             </tr>
@@ -31,21 +31,21 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>@item.PersonId</td>
-                    <td>@item.Name</td>
-                    <td>@item.PhoneNumber</td>
-                    <td>@item.CityName</td>
-                    <td>@item.PersonLanguages.Count</td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.PersonId">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.PersonId">Details</a> |
-                        @if (User.IsInRole("Admin"))
-                        {
-                            <a asp-action="Delete" asp-route-id=@item.PersonId>Delete</a>
-                        }
-                    </td>
-                </tr>
+            <tr>
+                <td>@item.PersonId</td>
+                <td>@item.Name</td>
+                <td>@item.PhoneNumber</td>
+                <td>@item.CityId</td>
+                <td>@item.PersonLanguages.Count</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.PersonId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.PersonId">Details</a> |
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a asp-action="Delete" asp-route-id=@item.PersonId>Delete</a>
+                    }
+                </td>
+            </tr>
             }
 
         </tbody>

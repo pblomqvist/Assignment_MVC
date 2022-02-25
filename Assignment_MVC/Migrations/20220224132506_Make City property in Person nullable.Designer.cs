@@ -4,14 +4,16 @@ using Assignment_MVC.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Assignment_MVC.Migrations
 {
     [DbContext(typeof(PersonDbContext))]
-    partial class PersonDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220224132506_Make City property in Person nullable")]
+    partial class MakeCitypropertyinPersonnullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -97,10 +99,10 @@ namespace Assignment_MVC.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "25bbde6b-1f95-4877-a880-cd0b1ae7d553",
+                            Id = "7a189cc1-75d4-4361-948d-d6c98c864f21",
                             AccessFailedCount = 0,
                             BirthDate = new DateTime(1987, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "55a23e82-2798-4698-855b-3c7a3b2241ee",
+                            ConcurrencyStamp = "6a17afb9-1eed-497b-a815-1b2a39cfab74",
                             Email = "admin@admin.com",
                             EmailConfirmed = false,
                             FirstName = "Admin",
@@ -108,9 +110,9 @@ namespace Assignment_MVC.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKkm/3NCMC5IzlLPMo4YDMqgFRtZJ9CCXzN9QlsCqVCW6rRCdzN9BSKiRu/Y/rAm6Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJmeEAKASdZJMJ47pyq4AwknI75GC0P/yAKHf0hpIotlyGFtWsOLIJA5azIW2J3Tkg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a0179751-3196-492f-8fb0-01c59c3bffb7",
+                            SecurityStamp = "20d57e8a-68c4-4bc1-aed9-ace79fd9cb9b",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -118,122 +120,73 @@ namespace Assignment_MVC.Migrations
 
             modelBuilder.Entity("Assignment_MVC.Models.City", b =>
                 {
-                    b.Property<int>("CityId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<string>("CityName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("CountryId")
-                        .HasColumnType("int");
+                    b.Property<string>("CountryName")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("CityId");
+                    b.HasKey("CityName");
 
-                    b.HasIndex("CountryId");
+                    b.HasIndex("CountryName");
 
                     b.ToTable("Cities");
 
                     b.HasData(
                         new
                         {
-                            CityId = 1,
                             CityName = "Göteborg",
-                            CountryId = 1
+                            CountryName = "Sweden"
                         },
                         new
                         {
-                            CityId = 2,
                             CityName = "Stockholm",
-                            CountryId = 1
+                            CountryName = "Sweden"
                         },
                         new
                         {
-                            CityId = 3,
                             CityName = "Kiruna",
-                            CountryId = 1
+                            CountryName = "Sweden"
                         },
                         new
                         {
-                            CityId = 4,
                             CityName = "Västerås",
-                            CountryId = 1
+                            CountryName = "Sweden"
                         });
                 });
 
             modelBuilder.Entity("Assignment_MVC.Models.Country", b =>
                 {
-                    b.Property<int>("CountryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<string>("CountryName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("CountryId");
+                    b.HasKey("CountryName");
 
                     b.ToTable("Countries");
 
                     b.HasData(
                         new
                         {
-                            CountryId = 1,
                             CountryName = "Sweden"
                         });
                 });
 
-            modelBuilder.Entity("Assignment_MVC.Models.DbPerson", b =>
-                {
-                    b.Property<int>("PersonId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CityId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PhoneNumber")
-                        .HasColumnType("int");
-
-                    b.HasKey("PersonId");
-
-                    b.HasIndex("CityId");
-
-                    b.ToTable("DbPerson");
-                });
-
             modelBuilder.Entity("Assignment_MVC.Models.Language", b =>
                 {
-                    b.Property<int>("LanguageId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<string>("LanguageName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("LanguageId");
+                    b.HasKey("LanguageName");
 
                     b.ToTable("Languages");
 
                     b.HasData(
                         new
                         {
-                            LanguageId = 1,
                             LanguageName = "Swedish"
                         },
                         new
                         {
-                            LanguageId = 2,
                             LanguageName = "Norwegian"
                         });
                 });
@@ -248,9 +201,6 @@ namespace Assignment_MVC.Migrations
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CityId")
-                        .HasColumnType("int");
-
                     b.Property<string>("CityName")
                         .HasColumnType("nvarchar(max)");
 
@@ -261,9 +211,12 @@ namespace Assignment_MVC.Migrations
                     b.Property<int>("PhoneNumber")
                         .HasColumnType("int");
 
+                    b.Property<string>("dbCityCityName")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("PersonId");
 
-                    b.HasIndex("CityId");
+                    b.HasIndex("dbCityCityName");
 
                     b.ToTable("People");
 
@@ -271,35 +224,35 @@ namespace Assignment_MVC.Migrations
                         new
                         {
                             PersonId = 1,
-                            CityId = 3,
+                            CityName = "Kiruna",
                             Name = "Maja Gräddnos",
                             PhoneNumber = 12345
                         },
                         new
                         {
                             PersonId = 2,
-                            CityId = 4,
+                            CityName = "Västerås",
                             Name = "Kalle Kaviar",
                             PhoneNumber = 123457
                         },
                         new
                         {
                             PersonId = 3,
-                            CityId = 2,
+                            CityName = "Stockholm",
                             Name = "Pelle Svanslös",
                             PhoneNumber = 123458
                         },
                         new
                         {
                             PersonId = 4,
-                            CityId = 1,
+                            CityName = "Göteborg",
                             Name = "Frank Franksson",
                             PhoneNumber = 123458
                         },
                         new
                         {
                             PersonId = 5,
-                            CityId = 1,
+                            CityName = "Göteborg",
                             Name = "Kalle Söderström",
                             PhoneNumber = 123458
                         });
@@ -310,17 +263,12 @@ namespace Assignment_MVC.Migrations
                     b.Property<int>("PersonId")
                         .HasColumnType("int");
 
-                    b.Property<int>("LanguageId")
-                        .HasColumnType("int");
+                    b.Property<string>("LanguageName")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("DbPersonPersonId")
-                        .HasColumnType("int");
+                    b.HasKey("PersonId", "LanguageName");
 
-                    b.HasKey("PersonId", "LanguageId");
-
-                    b.HasIndex("DbPersonPersonId");
-
-                    b.HasIndex("LanguageId");
+                    b.HasIndex("LanguageName");
 
                     b.ToTable("PersonLanguages");
 
@@ -328,17 +276,17 @@ namespace Assignment_MVC.Migrations
                         new
                         {
                             PersonId = 1,
-                            LanguageId = 1
+                            LanguageName = "Swedish"
                         },
                         new
                         {
                             PersonId = 1,
-                            LanguageId = 2
+                            LanguageName = "Norwegian"
                         },
                         new
                         {
                             PersonId = 2,
-                            LanguageId = 2
+                            LanguageName = "Norwegian"
                         });
                 });
 
@@ -371,15 +319,15 @@ namespace Assignment_MVC.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "76feee72-1ed2-4ebb-ba0b-cf9fbf571a97",
-                            ConcurrencyStamp = "7f6f480d-835a-4437-90a1-52de8160df02",
+                            Id = "f321e5a1-4cb5-44ca-aede-0b756f9620cf",
+                            ConcurrencyStamp = "86dc4d6b-a7f9-414e-8cef-1b4df6257750",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "25bbde6b-1f95-4877-a880-cd0b1ae7d553",
-                            ConcurrencyStamp = "4d438611-6900-4a1e-9394-fef833ffd7c6",
+                            Id = "7a189cc1-75d4-4361-948d-d6c98c864f21",
+                            ConcurrencyStamp = "6053e4fd-7ccc-4a3d-a428-2d811b0b45a7",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -472,8 +420,8 @@ namespace Assignment_MVC.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "25bbde6b-1f95-4877-a880-cd0b1ae7d553",
-                            RoleId = "76feee72-1ed2-4ebb-ba0b-cf9fbf571a97"
+                            UserId = "7a189cc1-75d4-4361-948d-d6c98c864f21",
+                            RoleId = "f321e5a1-4cb5-44ca-aede-0b756f9620cf"
                         });
                 });
 
@@ -500,38 +448,21 @@ namespace Assignment_MVC.Migrations
                 {
                     b.HasOne("Assignment_MVC.Models.Country", "Country")
                         .WithMany("Cities")
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Assignment_MVC.Models.DbPerson", b =>
-                {
-                    b.HasOne("Assignment_MVC.Models.City", "City")
-                        .WithMany("People")
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CountryName");
                 });
 
             modelBuilder.Entity("Assignment_MVC.Models.Person", b =>
                 {
-                    b.HasOne("Assignment_MVC.Models.City", "DbCity")
-                        .WithMany()
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("Assignment_MVC.Models.City", "dbCity")
+                        .WithMany("People")
+                        .HasForeignKey("dbCityCityName");
                 });
 
             modelBuilder.Entity("Assignment_MVC.Models.PersonLanguage", b =>
                 {
-                    b.HasOne("Assignment_MVC.Models.DbPerson", null)
-                        .WithMany("PersonLanguages")
-                        .HasForeignKey("DbPersonPersonId");
-
                     b.HasOne("Assignment_MVC.Models.Language", "Language")
                         .WithMany("PersonLanguages")
-                        .HasForeignKey("LanguageId")
+                        .HasForeignKey("LanguageName")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

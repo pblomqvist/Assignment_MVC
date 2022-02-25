@@ -15,25 +15,25 @@
             </tr>
         </thead>
         <tbody>
-                <tr>
-                    <td>@Model.PersonId</td>
-                    <td>@Model.Name</td>
-                    <td>@Model.PhoneNumber</td>
-                    <td>@Model.CityName</td>
-                    <td>
+            <tr>
+                <td>@Model.PersonId</td>
+                <td>@Model.Name</td>
+                <td>@Model.PhoneNumber</td>
+                <td>@Model.CityName</td>
+                <td>
                     @foreach (PersonLanguage lang in Model.PersonLanguages)
                     {
-                        @lang.LanguageName <br />
+                        @lang.LanguageId <br />
                     }
-                    </td>
-                    <td>
-                        <a asp-action="">Edit</a> |
-                        @if (User.IsInRole("Admin"))
-                        {
-                            <a asp-action="Delete" asp-route-id=@Model.PersonId>Delete person</a>
-                        }
-                    </td>
-                </tr>
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id=@Model.PersonId>Edit</a> |
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a asp-action="Delete" asp-route-id=@Model.PersonId>Delete person</a>
+                    }
+                </td>
+            </tr>
         </tbody>
     </table>
     <a asp-action="Index">Go back</a>

@@ -9,7 +9,7 @@ namespace Assignment_MVC.ViewModels
     public class LanguageCreateViewModel
     {
         [Required]
-        [RegularExpression("^[a-zA-Z ]*$", ErrorMessage = "Name cannot contain numbers")]
+        [RegularExpression("^[a-zA-ZÀ-ÿ ]*$", ErrorMessage = "Name cannot contain numbers")]
         [Display(Name = "Name")]
         [StringLength(80, MinimumLength = 1)]
         public string LanguageName { get; set; }

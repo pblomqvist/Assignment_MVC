@@ -4,14 +4,16 @@ using Assignment_MVC.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Assignment_MVC.Migrations
 {
     [DbContext(typeof(PersonDbContext))]
-    partial class PersonDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220224150155_Add CityName column")]
+    partial class AddCityNamecolumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -97,10 +99,10 @@ namespace Assignment_MVC.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "25bbde6b-1f95-4877-a880-cd0b1ae7d553",
+                            Id = "ab069b11-6e4d-4c94-b0e3-54d9253f5fd2",
                             AccessFailedCount = 0,
                             BirthDate = new DateTime(1987, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "55a23e82-2798-4698-855b-3c7a3b2241ee",
+                            ConcurrencyStamp = "99eaa685-879b-47ea-a0ab-5f8618cdcbc9",
                             Email = "admin@admin.com",
                             EmailConfirmed = false,
                             FirstName = "Admin",
@@ -108,9 +110,9 @@ namespace Assignment_MVC.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKkm/3NCMC5IzlLPMo4YDMqgFRtZJ9CCXzN9QlsCqVCW6rRCdzN9BSKiRu/Y/rAm6Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPV9PUHqPp/ZXRlIW8vY0K/w4lfnAU+rZUpiT0BBslORTTzta5yjBN+rs0Cd9rP2jg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a0179751-3196-492f-8fb0-01c59c3bffb7",
+                            SecurityStamp = "6c1a6229-a874-42e6-977b-ccc1ef8cd597",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -184,30 +186,6 @@ namespace Assignment_MVC.Migrations
                             CountryId = 1,
                             CountryName = "Sweden"
                         });
-                });
-
-            modelBuilder.Entity("Assignment_MVC.Models.DbPerson", b =>
-                {
-                    b.Property<int>("PersonId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CityId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PhoneNumber")
-                        .HasColumnType("int");
-
-                    b.HasKey("PersonId");
-
-                    b.HasIndex("CityId");
-
-                    b.ToTable("DbPerson");
                 });
 
             modelBuilder.Entity("Assignment_MVC.Models.Language", b =>
@@ -313,12 +291,7 @@ namespace Assignment_MVC.Migrations
                     b.Property<int>("LanguageId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("DbPersonPersonId")
-                        .HasColumnType("int");
-
                     b.HasKey("PersonId", "LanguageId");
-
-                    b.HasIndex("DbPersonPersonId");
 
                     b.HasIndex("LanguageId");
 
@@ -371,15 +344,15 @@ namespace Assignment_MVC.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "76feee72-1ed2-4ebb-ba0b-cf9fbf571a97",
-                            ConcurrencyStamp = "7f6f480d-835a-4437-90a1-52de8160df02",
+                            Id = "1c864a52-bc86-4431-85b3-fc9fa5054b8f",
+                            ConcurrencyStamp = "4ae26bd0-2d14-4810-b9f8-b673a66272d2",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "25bbde6b-1f95-4877-a880-cd0b1ae7d553",
-                            ConcurrencyStamp = "4d438611-6900-4a1e-9394-fef833ffd7c6",
+                            Id = "ab069b11-6e4d-4c94-b0e3-54d9253f5fd2",
+                            ConcurrencyStamp = "f98c92a5-c997-4255-b3c8-0f926c7fb2fa",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -472,8 +445,8 @@ namespace Assignment_MVC.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "25bbde6b-1f95-4877-a880-cd0b1ae7d553",
-                            RoleId = "76feee72-1ed2-4ebb-ba0b-cf9fbf571a97"
+                            UserId = "ab069b11-6e4d-4c94-b0e3-54d9253f5fd2",
+                            RoleId = "1c864a52-bc86-4431-85b3-fc9fa5054b8f"
                         });
                 });
 
@@ -505,19 +478,10 @@ namespace Assignment_MVC.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Assignment_MVC.Models.DbPerson", b =>
-                {
-                    b.HasOne("Assignment_MVC.Models.City", "City")
-                        .WithMany("People")
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Assignment_MVC.Models.Person", b =>
                 {
                     b.HasOne("Assignment_MVC.Models.City", "DbCity")
-                        .WithMany()
+                        .WithMany("People")
                         .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -525,10 +489,6 @@ namespace Assignment_MVC.Migrations
 
             modelBuilder.Entity("Assignment_MVC.Models.PersonLanguage", b =>
                 {
-                    b.HasOne("Assignment_MVC.Models.DbPerson", null)
-                        .WithMany("PersonLanguages")
-                        .HasForeignKey("DbPersonPersonId");
-
                     b.HasOne("Assignment_MVC.Models.Language", "Language")
                         .WithMany("PersonLanguages")
                         .HasForeignKey("LanguageId")
