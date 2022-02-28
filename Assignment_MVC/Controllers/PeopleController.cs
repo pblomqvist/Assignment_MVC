@@ -45,6 +45,13 @@ namespace Assignment_MVC.Controllers
             return View(person.ToList());
         }
 
+        [HttpGet]
+        public JsonResult GetCityList(int CountryId)
+        {
+            List<City> CityList = _personDbContext.Cities.Where(c => c.CountryId == CountryId).ToList();
+            return Json(CityList);
+        }
+
         public IActionResult Create(IList<Language> langs, PersonDBCreateViewModel viewModel)
         {
             ViewData["CityName"] = new SelectList(_personDbContext.Cities, "CityId", "CityName");

@@ -1,4 +1,38 @@
-﻿//Fetch list
+﻿// Fetch cities depending on selected country
+$("#CountryId").change(function () {
+   
+    var CountryId = $("#CountryId").val();
+
+    $.ajax({
+        //base address/controller/Action
+        url: '/People/GetCityList',
+        dataType: "json",
+        type: 'GET',
+        data: {
+            //Passing Input parameter
+            CountryId: CountryId
+        },
+        success: function (result) {
+            console.log("reached!" + CountryId);
+            console.log(result);
+
+            $("#CityId").empty();
+
+            $.each(result, function (i, val) {
+                var obj = result[Object.keys(result)[i]];
+                $("#CityId").append("<option value='" + obj[Object.keys(obj)[0]] + "'>" + obj[Object.keys(obj)[1]] + "</option>")
+            });
+
+        },
+        error: function () {
+            console.log("error");
+        }
+    });
+
+});
+
+
+//Fetch list
 function fetchData() {
     $.get("Test/Fetch", function (data, status) {
         console.log("Data: " + data + "\nStatus: " + status);

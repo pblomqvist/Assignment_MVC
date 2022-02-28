@@ -11,6 +11,8 @@ namespace Assignment_MVC.ViewModels
     {
         //Viewmodel for /Person/Create in order to keep /Test/Create intact
 
+        public Person EditPerson { get; set; }
+
         [Required]
         [RegularExpression("^[a-zA-ZÀ-ÿ ]*$", ErrorMessage = "Name cannot contain numbers or special characters")]
         [StringLength(80, MinimumLength = 1)]
