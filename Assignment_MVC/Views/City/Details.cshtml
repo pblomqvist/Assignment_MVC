@@ -1,0 +1,41 @@
+﻿@model Assignment_MVC.Models.City
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Country</th>
+                <th>Id of people</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.CityId</td>
+                <td>@Model.CityName</td>
+                <td>@Model.CountryId</td>
+                <td>
+                    @foreach (Person pers in Model.People)
+                    {
+                        @pers.PersonId <br />
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-CityId=@Model.CityId>Edit</a> |
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a asp-action="Delete" asp-route-CityId=@Model.CityId>Delete city</a>
+                    }
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <a asp-action="Index">Go back</a>
+</div>

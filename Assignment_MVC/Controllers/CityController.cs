@@ -3,6 +3,7 @@ using Assignment_MVC.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,8 @@ namespace Assignment_MVC.Controllers
 
         public IActionResult Index()
         {
-            return View(_personDbContext.Cities.ToList());
+
+            return View(_personDbContext.Cities.Include(p => p.People).ToList());
         }
 
         [HttpPost]
@@ -106,6 +108,24 @@ namespace Assignment_MVC.Controllers
 
             return View(viewModel);
 
+        }
+
+        public IActionResult Details(int CityId)
+        {
+
+            var targetCity = _personDbContext.Cities.Find(CityId);
+
+            var people = _personDbContext.People.Where(p => p.CityId == CityId).ToList();
+
+            var country = from c in _personDbContext.Countries
+                       where c.CountryId == targetCity.CountryId
+                       select c.CountryName;
+
+            //targetCity.CountryName = country.FirstOrDefault().ToString();
+            targetCity.People = people;
+
+
+            return View(targetCity);
         }
 
         public IActionResult Delete(int CityId)

@@ -22,7 +22,8 @@
             <tr>
                 <th>Id</th>
                 <th>City</th>
-                <th>Country</th>
+                <th>Country Id</th>
+                <th>Population</th>
 
             </tr>
         </thead>
@@ -33,8 +34,10 @@
                 <td>@item.CityId</td>
                 <td>@item.CityName</td>
                 <td>@item.CountryId</td>
+                <td>@item.People.Count</td>
                 <td>
                     <a asp-action="Edit" asp-route-CityId=@item.CityId>Edit</a> |
+                    <a asp-action="Details" asp-route-CityId=@item.CityId>Details</a> |
                     <a asp-action="Delete" asp-route-CityId=@item.CityId>Delete</a>
                 </td>
             </tr>
